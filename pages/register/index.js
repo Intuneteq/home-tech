@@ -1,9 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
-import { useRouter } from 'next/router';
+import { useRouter } from "next/router";
+import axios from "axios";
 
 const Register = () => {
-    const router = useRouter()
+  const [fullName, setFullName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const router = useRouter();
+
+  const handleNext = async () => {
+    const body = { fullName, email, password };
+    try {
+      await axios.post("/api/register", body);
+      router.push("/colors");
+    } catch (error) {
+      console.error(error);
+    }
+  };
   return (
     <main style={{ height: "100vh" }} className="app__flex">
       <article className="column-flex modal">
@@ -21,22 +35,36 @@ const Register = () => {
           <p className="dense">3</p>
         </div>
         <div className="modal-input">
-          <input type="text" placeholder="Full name" />
+          <input
+            type="text"
+            placeholder="Full name"
+            onChange={(e) => setFullName(e.target.value)}
+          />
           <Image src={"/fullname.svg"} width={24} height={24} alt="fullname" />
         </div>
         <div className="modal-input">
-          <input type="email" placeholder="Email address" />
+          <input
+            type="email"
+            placeholder="Email address"
+            onChange={(e) => setEmail(e.target.value)}
+          />
           <Image src={"/sms.svg"} width={24} height={24} alt="email" />
         </div>
         <div className="modal-input">
-          <input type="password" placeholder="Password" />
+          <input
+            type="password"
+            placeholder="Password"
+            onChange={(e) => setPassword(e.target.value)}
+          />
           <Image src={"/eye-slash.svg"} width={24} height={24} alt="email" />
         </div>
         <div
           style={{ marginTop: "22px", marginBottom: "10px" }}
           className="modal-btn column-flex"
         >
-          <button onClick={() => router.push('./colors')} className="primary-btn">Next</button>
+          <button onClick={handleNext} className="primary-btn">
+            Next
+          </button>
         </div>
         <p style={{ marginBottom: "44px" }} className="p-text">
           Already have an account{" "}
