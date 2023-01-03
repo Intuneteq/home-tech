@@ -241,6 +241,11 @@ body {
     width: 502px;
     gap: 20px;
     flex-wrap: wrap;
+
+    img {
+      border-radius: 8px;
+      cursor: pointer;
+    }
   }
 
   .modal-footer {

@@ -1,20 +1,59 @@
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/router";
+import { toast } from "react-toastify";
+import axios from "axios";
 
 const Images = () => {
   const router = useRouter();
+  const [imageString, setImageString] = useState("");
+
   const myImages = [
-    "/wolf.png",
-    "/car.png",
-    "/bookshelf.png",
-    "/soccer.png",
-    "/archi.png",
-    "/space.png",
-    "/coding.png",
-    "/view.png",
-    "/study.png",
+    {
+      src: "https://res.cloudinary.com/intuneteq/image/upload/v1672735827/home-tech/wolf_rbnaha.png",
+    },
+    {
+      src: "https://res.cloudinary.com/intuneteq/image/upload/v1672735796/home-tech/car_wed6bw.png",
+    },
+    {
+      src: "https://res.cloudinary.com/intuneteq/image/upload/v1672735842/home-tech/bookshelf_mwy0j2.png",
+    },
+    {
+      src: "https://res.cloudinary.com/intuneteq/image/upload/v1672735846/home-tech/soccer_bfrfmx.png",
+    },
+    {
+      src: "https://res.cloudinary.com/intuneteq/image/upload/v1672735809/home-tech/bird_xbkpvz.png",
+    },
+    {
+      src: "https://res.cloudinary.com/intuneteq/image/upload/v1672735804/home-tech/space_hligja.png",
+    },
+    {
+      src: "https://res.cloudinary.com/intuneteq/image/upload/v1672735821/home-tech/coding_ozx1b0.png",
+    },
+    {
+      src: "https://res.cloudinary.com/intuneteq/image/upload/v1672735855/home-tech/view_xgti8w.png",
+    },
+    {
+      src: "https://res.cloudinary.com/intuneteq/image/upload/v1672735854/home-tech/work_rthnax.png",
+    },
   ];
+
+  const handleNext = async () => {
+    const email = localStorage.getItem("homeTechMail");
+    try {
+      await axios.post("/api/images/register", {
+        email,
+        imageString,
+      });
+      toast.success(`Image upload success`);
+      router.push("/image-pattern");
+    } catch (error) {
+      console.log(error);
+      console.error(error.response.data.message);
+      toast.error(error.response.data.message);
+    }
+  };
+
   return (
     <main style={{ height: "100vh" }} className="app__flex">
       <article className="column-flex modal">
@@ -34,17 +73,21 @@ const Images = () => {
         </div>
         <div className="modal-images app__flex-3">
           {myImages.map((item, index) => (
-            <Image key={index} src={item} width={154} height={110} alt="im" />
+            <Image
+              key={index}
+              src={item.src}
+              width={154}
+              height={110}
+              alt="im"
+              onClick={() => setImageString(item.src)}
+            />
           ))}
         </div>
         <div
           style={{ marginTop: "22px", marginBottom: "40px" }}
           className="modal-btn column-flex"
         >
-          <button
-            onClick={() => router.push("./success")}
-            className="primary-btn"
-          >
+          <button onClick={handleNext} className="primary-btn">
             Next
           </button>
         </div>
