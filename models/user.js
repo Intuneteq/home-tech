@@ -1,32 +1,27 @@
-import mongoose from 'mongoose'
+import mongoose from "mongoose";
 
 const UserSchema = new mongoose.Schema({
   fullName: {
     type: String,
-    required: true
+    required: true,
   },
   email: {
     type: String,
-    required: true
+    required: true,
   },
   password: {
     type: String,
-    required: true
+    required: true,
   },
-  authColor: {
-    colorCode: {
-        type: String
-    },
-    colorCombination: [String]
-  },
+  colorCombination: [String],
   authImage: {
     imageString: {
-        type: String
+      type: String,
     },
     imageCombination: {
-        type: [Number]
-    }
-  }
-})
+      type: [Number],
+    },
+  },
+});
 
-module.exports = mongoose.models.User || mongoose.model('User', UserSchema)
+module.exports = mongoose.models.User || mongoose.model("User", UserSchema);

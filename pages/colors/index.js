@@ -1,24 +1,36 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import Image from "next/image";
-import { useRouter } from 'next/router';
-import { toast } from 'react-toastify';
+import { useRouter } from "next/router";
+import { toast } from "react-toastify";
+import axios from "axios";
 
 const Colors = () => {
-    const router = useRouter();
-    const colorArray =[];
+  const router = useRouter();
+  const colorArray = [];
 
-    const handleNext = () => {
-      console.log(colorArray)
+  const handleNext = async () => {
+    const email = localStorage.getItem("homeTechMail");
+    try {
+      await axios.post("/api/colors/register", {
+        email,
+        colorCombination: colorArray,
+      });
+      toast.success(`color combination registered`);
+      router.push("/images");
+    } catch (error) {
+      console.error(error.response.data.message);
+      toast.error(error.response.data.message);
     }
+  };
 
-    const handlePush = (hexCode) => {
-      const colorExistInArray = colorArray.find(item => item == hexCode);
-      if(colorExistInArray) {
-        toast.warn('you already selected this')
-      } else {
-        colorArray.push(hexCode)
-      }
+  const handlePush = (hexCode) => {
+    const colorExistInArray = colorArray.find((item) => item == hexCode);
+    if (colorExistInArray) {
+      toast.warn("you already selected this");
+    } else {
+      colorArray.push(hexCode);
     }
+  };
 
   return (
     <main style={{ height: "100vh" }} className="app__flex">
@@ -43,12 +55,32 @@ const Colors = () => {
           style={{ marginBottom: "70px" }}
           className="app__flex-2 modal-colors"
         >
-          <Image src={"/blue.png"} width={80} height={80} alt="blue" onClick={()=>handlePush('#115FDB')} />
-          <Image src={"/orange.png"} width={80} height={80} alt="blue" onClick={()=>handlePush('#F65B2B')} />
-          <Image src={"/red.png"} width={80} height={80} alt="blue" onClick={()=>handlePush('#E5017C')} />
+          <Image
+            src={"/blue.png"}
+            width={80}
+            height={80}
+            alt="blue"
+            onClick={() => handlePush("#115FDB")}
+          />
+          <Image
+            src={"/orange.png"}
+            width={80}
+            height={80}
+            alt="blue"
+            onClick={() => handlePush("#F65B2B")}
+          />
+          <Image
+            src={"/red.png"}
+            width={80}
+            height={80}
+            alt="blue"
+            onClick={() => handlePush("#E5017C")}
+          />
         </div>
         <div style={{ marginBottom: "140px" }} className="modal-btn">
-          <button onClick={()=>handlePush('okay')} className="primary-btn">Next</button>
+          <button onClick={handleNext} className="primary-btn">
+            Next
+          </button>
         </div>
         <div className="modal-footer app__flex-2">
           <p>Privacy and Policy</p>

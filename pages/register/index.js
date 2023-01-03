@@ -10,8 +10,10 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const router = useRouter();
 
-  const handleNext = async () => {
+  const handleNext = async (e) => {
+    e.preventDefault()
     const body = { fullName, email, password };
+    localStorage.setItem('homeTechMail', email)
     try {
       await axios.post("/api/register", body);
       toast.success(`${fullName} successfully registered`)
