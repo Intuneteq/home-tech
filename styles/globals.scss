@@ -1,0 +1,260 @@
+@import url("https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700;900&display=swap");
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  scroll-behavior: smooth;
+  font-family: "Lato";
+}
+
+:root {
+  --primary-color: #0076a7;
+  --black-color: #000000;
+  --secondary-black-color: #8e8e8e;
+  --white-color: #ffffff;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0 !important;
+  padding: 0;
+  overflow-x: hidden;
+  //   background-image: url("../public/homebackground.svg");
+  overflow-y: scroll;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.outlet {
+  background-image: url("../public/homebackground.svg");
+  padding: 110px 0;
+  // min-height: 100vh;
+}
+
+.app__flex {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.app__flex-2 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.app__flex-3 {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.app__flex-4 {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.app__flex-5 {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+}
+
+.column-flex {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.img-size {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+}
+
+.p-text {
+  font-weight: 400;
+  font-size: 16px;
+}
+
+.p-text-2 {
+  font-size: 16px;
+  font-weight: 400;
+  color: #8e8e8e;
+  text-align: center;
+  line-height: 24px;
+  max-width: 348px;
+}
+
+.head-text {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--primary-color);
+}
+
+.primary-btn {
+  width: 100%;
+  height: 62px;
+  background: var(--primary-color);
+  border-radius: 8px;
+  border: none;
+
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.secondary-btn {
+  width: 100%;
+  height: 62px;
+  background: none;
+  border-radius: 8px;
+  border: 2px solid var(--primary-color);
+
+  color: var(--primary-color);
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.test {
+  border: 1px solid red;
+}
+
+.test1 {
+  border: 1px solid blue;
+}
+
+.nav {
+  width: 100%;
+  height: 100px;
+  background-color: #ffffff;
+
+  padding: 0 100px;
+
+  & > div:nth-child(1) {
+    gap: 7px;
+    p {
+      color: var(--primary-color);
+      font-weight: 600;
+    }
+  }
+}
+
+.modal {
+  padding: 72px 40px 37px;
+  width: 50%;
+  border-radius: 8px;
+  background: var(--white-color);
+
+  .modal-btn {
+    width: 400px;
+    gap: 20px;
+  }
+
+  .progress {
+    width: 400px;
+
+    p {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+
+      font-size: 16px;
+      font-weight: 400;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .filled {
+      background-color: var(--primary-color);
+      color: var(--white-color);
+    }
+
+    .dense {
+      border: 1px solid var(--primary-color);
+      color: var(--primary-color);
+    }
+  }
+
+  .modal-input {
+    width: 400px;
+    height: 58px;
+    margin-bottom: 20px;
+    position: relative;
+
+    input {
+      width: 100%;
+      height: 100%;
+      border-radius: 8px;
+      border: 1px solid #b2b2b2;
+      padding-left: 20px;
+      padding-right: 10%;
+      outline: none;
+    }
+
+    img {
+      position: absolute;
+
+      right: 17px;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    svg {
+      position: absolute;
+      width: 24px;
+      height: 24px;
+      color: var(--secondary-black-color);
+
+      right: 2%;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+  }
+
+  .modal-colors {
+    width: 400px;
+
+    img {
+        cursor: pointer;
+    }
+  }
+
+  .modal-images {
+    width: 502px;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  .modal-footer {
+    width: 100%;
+
+    p {
+      font-size: 16px;
+      font-weight: 700;
+      color: #626262;
+    }
+  }
+}
+
+.homepage {
+  height: 100vh;
+}
