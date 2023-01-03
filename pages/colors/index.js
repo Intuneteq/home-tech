@@ -1,9 +1,25 @@
-import React from "react";
+import React, {useState} from "react";
 import Image from "next/image";
 import { useRouter } from 'next/router';
+import { toast } from 'react-toastify';
 
 const Colors = () => {
-    const router = useRouter()
+    const router = useRouter();
+    const colorArray =[];
+
+    const handleNext = () => {
+      console.log(colorArray)
+    }
+
+    const handlePush = (hexCode) => {
+      const colorExistInArray = colorArray.find(item => item == hexCode);
+      if(colorExistInArray) {
+        toast.warn('you already selected this')
+      } else {
+        colorArray.push(hexCode)
+      }
+    }
+
   return (
     <main style={{ height: "100vh" }} className="app__flex">
       <article className="modal column-flex">
@@ -27,12 +43,12 @@ const Colors = () => {
           style={{ marginBottom: "70px" }}
           className="app__flex-2 modal-colors"
         >
-          <Image src={"/blue.png"} width={80} height={80} alt="blue" />
-          <Image src={"/orange.png"} width={80} height={80} alt="blue" />
-          <Image src={"/red.png"} width={80} height={80} alt="blue" />
+          <Image src={"/blue.png"} width={80} height={80} alt="blue" onClick={()=>handlePush('#115FDB')} />
+          <Image src={"/orange.png"} width={80} height={80} alt="blue" onClick={()=>handlePush('#F65B2B')} />
+          <Image src={"/red.png"} width={80} height={80} alt="blue" onClick={()=>handlePush('#E5017C')} />
         </div>
         <div style={{ marginBottom: "140px" }} className="modal-btn">
-          <button onClick={() => router.push('/images')} className="primary-btn">Next</button>
+          <button onClick={()=>handlePush('okay')} className="primary-btn">Next</button>
         </div>
         <div className="modal-footer app__flex-2">
           <p>Privacy and Policy</p>

@@ -17,7 +17,7 @@ const UserSchema = new mongoose.Schema({
     colorCode: {
         type: String
     },
-    colorCombination: [Number]
+    colorCombination: [String]
   },
   authImage: {
     imageString: {

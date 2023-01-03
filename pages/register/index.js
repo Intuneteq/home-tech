@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import axios from "axios";
+import { toast } from 'react-toastify';
 
 const Register = () => {
   const [fullName, setFullName] = useState("");
@@ -13,9 +14,11 @@ const Register = () => {
     const body = { fullName, email, password };
     try {
       await axios.post("/api/register", body);
+      toast.success(`${fullName} successfully registered`)
       router.push("/colors");
     } catch (error) {
-      console.error(error);
+      console.error(error.response.data.message);
+      toast.error(error.response.data.message)
     }
   };
   return (
