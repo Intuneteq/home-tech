@@ -35,7 +35,6 @@ body {
 .outlet {
   background-image: url("../public/homebackground.svg");
   padding: 110px 0;
-  // min-height: 100vh;
 }
 
 .app__flex {
@@ -234,7 +233,7 @@ body {
     width: 400px;
 
     img {
-        cursor: pointer;
+      cursor: pointer;
     }
   }
 
@@ -257,4 +256,74 @@ body {
 
 .homepage {
   height: 100vh;
+}
+
+@media screen and (max-width: 998px) {
+  .outlet {
+    padding: 50px 0;
+  }
+
+  .modal {
+    width: 60%;
+
+    .modal-btn {
+      width: 100%;
+    }
+
+    .progress {
+      width: 100%;
+    }
+
+    .modal-input {
+      width: 100%;
+    }
+
+    .modal-colors {
+      width: 100%;
+    }
+
+    .modal-images {
+      width: 100%;
+      gap: 20px;
+      justify-content: center;
+
+      img {
+        width: 104px;
+        height: 60px;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .nav {
+    padding: 0 40px;
+  }
+  .modal {
+    width: 90%;
+  }
+}
+@media screen and (max-width: 480px) {
+  .nav {
+    padding: 0 20px;
+  }
+
+  .outlet {
+    padding: 5px 0;
+  }
+
+  .modal {
+    padding: 72px 20px 37px;
+    width: 95%;
+
+    h1 {
+      text-align: center;
+    }
+
+    .progress {
+      img {
+        width: 90px;
+      }
+    }
+  }
 }
