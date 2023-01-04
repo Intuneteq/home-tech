@@ -49,8 +49,9 @@ const Images = () => {
       router.push("/image-pattern");
     } catch (error) {
       console.log(error);
-      console.error(error.response.data.message);
-      toast.error(error.response.data.message);
+      error.response.data
+        ? toast.error(error.response.data.message)
+        : toast.error("something went wrong");
     }
   };
 
@@ -66,7 +67,7 @@ const Images = () => {
         </p>
         <div style={{ marginBottom: "25px" }} className="progress app__flex">
           <p className="filled">1</p>
-          <Image src={"/Line 131.png"} alt="line" width={140} height={1} />
+          <Image useMap="" src={"/Line 131.png"} alt="line" width={140} height={1} />
           <p className="filled">2</p>
           <Image src={"/Line 131.png"} alt="line" width={140} height={1} />
           <p className="filled">3</p>

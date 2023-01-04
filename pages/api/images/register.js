@@ -1,6 +1,8 @@
 import User from "../../../models/user";
 import dbConnect from "../../../lib/dbConnect";
 
+// const imageToSlices = require('image-to-slices');
+
 export default async function handler(req, res) {
     const { method } = req;
     await dbConnect();

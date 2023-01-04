@@ -6,7 +6,7 @@ const Login = () => {
     <main style={{ height: "100vh" }} className="app__flex">
       <article className="column-flex modal">
         <h1 style={{ marginBottom: "8px" }} className="head-text">
-          Create an Account
+        Sign In to Continue
         </h1>
         <p style={{ marginBottom: "20px" }} className="p-text-2">
           Fill in your details below to create an

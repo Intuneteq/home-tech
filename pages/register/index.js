@@ -19,8 +19,10 @@ const Register = () => {
       toast.success(`${fullName} successfully registered`)
       router.push("/colors");
     } catch (error) {
-      console.error(error.response.data.message);
-      toast.error(error.response.data.message)
+      console.log(error);
+      error.response.data
+        ? toast.error(error.response.data.message)
+        : toast.error("something went wrong");
     }
   };
   return (

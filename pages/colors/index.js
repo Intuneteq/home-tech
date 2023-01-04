@@ -18,8 +18,10 @@ const Colors = () => {
       toast.success(`color combination registered`);
       router.push("/images");
     } catch (error) {
-      console.error(error.response.data.message);
-      toast.error(error.response.data.message);
+      console.log(error);
+      error.response.data
+        ? toast.error(error.response.data.message)
+        : toast.error("something went wrong");
     }
   };
 

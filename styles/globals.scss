@@ -248,6 +248,17 @@ body {
     }
   }
 
+  .modal-grid {
+    width: 441px;
+    column-gap: 4px;
+    row-gap: 7px;
+    flex-wrap: wrap;
+
+    img {
+      cursor: pointer;
+    }
+  }
+
   .modal-footer {
     width: 100%;
 
