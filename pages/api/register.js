@@ -36,6 +36,6 @@ export default async function handler(req, res) {
       return res.status(500).json({ message: error.message });
     }
   } else {
-    res.status(400).json({ success: false });
+    res.status(400).json({ success: false, message: 'resource not found' });
   }
 }
