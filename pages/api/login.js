@@ -22,7 +22,7 @@ export default async function handler(req, res) {
 
     const accessToken = jsonwebtoken.sign({email}, process.env.JWT_SECRET, { expiresIn: "5h" });
 
-    res.status(200).json({success: true, token: accessToken, message: 'user sign In successfull'})
+    res.status(200).json({success: true, token: accessToken, message: 'user sign In successful'})
   } else {
     res.status(400).json({ success: false, message: "resource not found" });
   }

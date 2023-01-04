@@ -11,10 +11,11 @@ const Login = () => {
   const router = useRouter();
 
   const handleLogin = async () => {
+    console.log('here', email, password)
     setLoading(true);
     try {
       const res = await axios.post("/api/login", { email, password });
-      const token = res.token;
+      const token = res.data.token;
       localStorage.setItem("token", token);
       toast.success("Login Successfull");
       router.push("/colors/login");
