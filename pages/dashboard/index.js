@@ -1,8 +1,12 @@
 import React from 'react'
 
-const Dashboard = () => {
+const Dashboard = ({fullName}) => {
   return (
-    <div>Dashboard</div>
+    <main className="dashboard column-flex">
+        <h6>welcome</h6>
+        <h1>{fullName}</h1>
+        <button>Goto Dashboard</button>
+    </main>
   )
 }
 

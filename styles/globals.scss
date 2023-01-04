@@ -157,7 +157,7 @@ body {
 
 .modal {
   padding: 72px 40px 37px;
-  width: 50%;
+  width: 45%;
   border-radius: 8px;
   background: var(--white-color);
 
@@ -272,6 +272,35 @@ body {
 
 .homepage {
   height: 100vh;
+}
+
+.dashboard {
+  padding: 192px 0;
+  color: #FFFFFF;
+
+  h6 {
+    font-weight: 500;
+    font-size: 32px;
+    margin-bottom: 12px;
+  }
+
+  h1 {
+    font-size: 32px;
+    font-weight: 800;
+    margin-bottom: 39px;
+  }
+
+  button {
+    width: 400px;
+    height: 62px;
+    border: 2px solid var(--white-color);
+    border-radius: 8px;
+    background: none;
+    font-weight: 700;
+    font-size: 16px;
+    color: var(--white-color);
+    cursor: pointer;
+  }
 }
 
 @media screen and (max-width: 998px) {
