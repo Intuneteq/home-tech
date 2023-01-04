@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
 
-const Images = ({ handleNext, setImageString }) => {
+const Images = ({ handleNext, setImageString, loading }) => {
 
   const myImages = [
     {
@@ -67,7 +67,7 @@ const Images = ({ handleNext, setImageString }) => {
           className="modal-btn column-flex"
         >
           <button onClick={handleNext} className="primary-btn">
-            Next
+            {loading ? 'validating...' : 'Next'}
           </button>
         </div>
         <div className="modal-footer app__flex-2">
