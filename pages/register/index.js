@@ -8,10 +8,12 @@ const Register = () => {
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState('');
   const router = useRouter();
 
   const handleNext = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
+    setLoading(true)
     const body = { fullName, email, password };
     localStorage.setItem('homeTechMail', email)
     try {
@@ -24,6 +26,7 @@ const Register = () => {
         ? toast.error("something went wrong")
         : toast.error(error.response.data.message);
     }
+    setLoading(false);
   };
   return (
     <main style={{ height: "100vh" }} className="app__flex">
@@ -70,7 +73,7 @@ const Register = () => {
           className="modal-btn column-flex"
         >
           <button onClick={handleNext} className="primary-btn">
-            Next
+            {loading ? 'Signing up...' : 'Next'}
           </button>
         </div>
         <p style={{ marginBottom: "44px" }} className="p-text">

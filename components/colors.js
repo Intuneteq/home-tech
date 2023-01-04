@@ -2,7 +2,7 @@ import React from "react";
 import Image from "next/image";
 import { toast } from "react-toastify";
 
-const Colors = ({ handleNext, colorArray }) => {
+const Colors = ({ handleNext, colorArray, loading }) => {
   const handlePush = (hexCode) => {
     const colorExistInArray = colorArray.find((item) => item == hexCode);
     if (colorExistInArray) {
@@ -59,7 +59,7 @@ const Colors = ({ handleNext, colorArray }) => {
         </div>
         <div style={{ marginBottom: "140px" }} className="modal-btn">
           <button onClick={handleNext} className="primary-btn">
-            Next
+            {loading ? 'Validating...' : 'Next'}
           </button>
         </div>
         <div className="modal-footer app__flex-2">
