@@ -7,7 +7,7 @@ export default async function handler(req, res) {
 
   if (method === "POST") {
     const { email, colorCombination } = req.body;
-    if (!email || colorCombination.length < 1)
+    if (!email || colorCombination.length < 3)
       return res
         .status(400)
         .json({ success: false, message: "Incomplete payload" });

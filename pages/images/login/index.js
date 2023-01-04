@@ -11,15 +11,10 @@ const ImageLogin = () => {
   const [loading, setLoading] = useState(false);
 
   const handleNext = async () => {
-    setLoading(true)
-    const token = localStorage.getItem("token");
+    setLoading(true);
+    const email = localStorage.getItem("homeTechMail");
     try {
-       await axios.post(
-        "/api/images/login", {imageString},
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
+      await axios.post("/api/images/login", { imageString, email });
       toast.success(`verification successful`);
       router.push("/image-pattern/login");
     } catch (error) {
@@ -28,10 +23,16 @@ const ImageLogin = () => {
         ? toast.error("something went wrong")
         : toast.error(error.response.data.message);
     }
-    setLoading(false)
+    setLoading(false);
   };
 
-  return <Images handleNext={handleNext} setImageString={setImageString} loading={loading} />;
+  return (
+    <Images
+      handleNext={handleNext}
+      setImageString={setImageString}
+      loading={loading}
+    />
+  );
 };
 
 export default ImageLogin;

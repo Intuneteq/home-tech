@@ -11,17 +11,12 @@ const ImagePatternLogin = () => {
 
   const handleSubmit = async () => {
     setLoading(true);
-    const token = localStorage.getItem("token");
+    const email = localStorage.getItem("homeTechMail");
     try {
-      await axios.post(
-        "/api/pattern/login",
-        {
-          imgPattern,
-        },
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
+      await axios.post("/api/pattern/login", {
+        imgPattern,
+        email,
+      });
       toast.success(`Validation success`);
       router.push("/dashboard");
     } catch (error) {
@@ -32,7 +27,13 @@ const ImagePatternLogin = () => {
     }
     setLoading(false);
   };
-  return <ImagePattern loading={loading} handleSubmit={handleSubmit} imgPattern={imgPattern} />;
+  return (
+    <ImagePattern
+      loading={loading}
+      handleSubmit={handleSubmit}
+      imgPattern={imgPattern}
+    />
+  );
 };
 
 export default ImagePatternLogin;
