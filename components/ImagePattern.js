@@ -1,39 +1,16 @@
 import React from "react";
 import Image from "next/image";
-import { useRouter } from "next/router";
 import { toast } from "react-toastify";
-import axios from "axios";
 
-const ImagePattern = () => {
-  const router = useRouter();
-  const imgPattern = [];
-
+const ImagePattern = ({ handleSubmit, imgPattern }) => {
   const pushIndex = (index, e) => {
     e.preventDefault();
     const findIndex = imgPattern.some((item) => item === index);
-    console.log(findIndex, "findindex");
 
     if (findIndex || imgPattern.length >= 3) {
       toast.warn("invalid");
     } else {
       imgPattern.push(index);
-    }
-  };
-
-  const handleSubmit = async () => {
-    const email = localStorage.getItem("homeTechMail");
-    try {
-      await axios.post("/api/pattern/register", {
-        email,
-        imgPattern,
-      });
-      toast.success(`Validation success`);
-      router.push("/success");
-    } catch (error) {
-      console.log(error);
-      error.response.data
-        ? toast.error(error.response.data.message)
-        : toast.error("something went wrong");
     }
   };
 

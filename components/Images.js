@@ -1,12 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import Image from "next/image";
-import { useRouter } from "next/router";
-import { toast } from "react-toastify";
-import axios from "axios";
 
-const Images = () => {
-  const router = useRouter();
-  const [imageString, setImageString] = useState("");
+const Images = ({ handleNext, setImageString }) => {
 
   const myImages = [
     {
@@ -38,23 +33,6 @@ const Images = () => {
     },
   ];
 
-  const handleNext = async () => {
-    const email = localStorage.getItem("homeTechMail");
-    try {
-      await axios.post("/api/images/register", {
-        email,
-        imageString,
-      });
-      toast.success(`Image upload success`);
-      router.push("/image-pattern");
-    } catch (error) {
-      console.log(error);
-      error.response.data
-        ? toast.error(error.response.data.message)
-        : toast.error("something went wrong");
-    }
-  };
-
   return (
     <main style={{ height: "100vh" }} className="app__flex">
       <article className="column-flex modal">
@@ -67,7 +45,7 @@ const Images = () => {
         </p>
         <div style={{ marginBottom: "25px" }} className="progress app__flex">
           <p className="filled">1</p>
-          <Image useMap="" src={"/Line 131.png"} alt="line" width={140} height={1} />
+          <Image src={"/Line 131.png"} alt="line" width={140} height={1} />
           <p className="filled">2</p>
           <Image src={"/Line 131.png"} alt="line" width={140} height={1} />
           <p className="filled">3</p>

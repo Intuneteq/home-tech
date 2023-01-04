@@ -1,30 +1,8 @@
 import React from "react";
 import Image from "next/image";
-import { useRouter } from "next/router";
 import { toast } from "react-toastify";
-import axios from "axios";
 
-const Colors = () => {
-  const router = useRouter();
-  const colorArray = [];
-
-  const handleNext = async () => {
-    const email = localStorage.getItem("homeTechMail");
-    try {
-      await axios.post("/api/colors/register", {
-        email,
-        colorCombination: colorArray,
-      });
-      toast.success(`color combination registered`);
-      router.push("/images");
-    } catch (error) {
-      console.log(error);
-      error.response.data
-        ? toast.error(error.response.data.message)
-        : toast.error("something went wrong");
-    }
-  };
-
+const Colors = ({ handleNext, colorArray }) => {
   const handlePush = (hexCode) => {
     const colorExistInArray = colorArray.find((item) => item == hexCode);
     if (colorExistInArray) {
