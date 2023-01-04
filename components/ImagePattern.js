@@ -2,7 +2,7 @@ import React from "react";
 import Image from "next/image";
 import { toast } from "react-toastify";
 
-const ImagePattern = ({ handleSubmit, imgPattern }) => {
+const ImagePattern = ({ handleSubmit, imgPattern, loading }) => {
   const pushIndex = (index, e) => {
     e.preventDefault();
     const findIndex = imgPattern.some((item) => item === index);
@@ -68,7 +68,7 @@ const ImagePattern = ({ handleSubmit, imgPattern }) => {
         </div>
         <div style={{ marginBottom: "62px" }} className="modal-btn column-flex">
           <button onClick={handleSubmit} className="primary-btn">
-            Submit
+            {loading ? 'validating...' : 'Submit'}
           </button>
         </div>
         <div className="modal-footer app__flex-2">

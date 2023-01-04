@@ -17,7 +17,7 @@ const RegisterImage = () => {
         imageString,
       });
       toast.success(`Image upload success`);
-      router.push("/image-pattern");
+      router.push("/image-pattern/register");
     } catch (error) {
       console.log(error);
       error?.response?.data === undefined || error?.response?.data === null
