@@ -9,11 +9,13 @@ export default async function handler(req, res) {
     return res.status(status).json({ success: false, message: message });
 
   if (method === "POST") {
-    const { colorCombination } = req.body;
+    const { imgPattern } = req.body;
+
+    console.log(user.authImage.imageCombination, 'here');
 
     const match =
-      JSON.stringify(colorCombination) ===
-      JSON.stringify(user.colorCombination);
+      JSON.stringify(imgPattern) ===
+      JSON.stringify(user.authImage.imageCombination);
     if (!match)
       return res
         .status(401)
