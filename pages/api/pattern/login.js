@@ -21,6 +21,8 @@ export default async function handler(req, res) {
         .status(404)
         .json({ success: false, message: `user with ${email} not found` });
 
+        console.log('ok', user)
+
     const match =
       JSON.stringify(imgPattern) ===
       JSON.stringify(user.authImage.imageCombination);

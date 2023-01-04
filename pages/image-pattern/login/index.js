@@ -13,10 +13,12 @@ const ImagePatternLogin = () => {
     setLoading(true);
     const email = localStorage.getItem("homeTechMail");
     try {
-      await axios.post("/api/pattern/login", {
+      const res = await axios.post("/api/pattern/login", {
         imgPattern,
         email,
       });
+      const token = res.data.token;
+      localStorage.setItem("home-tech", token);
       toast.success(`Validation success`);
       router.push("/dashboard");
     } catch (error) {

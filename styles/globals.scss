@@ -153,6 +153,20 @@ body {
       font-weight: 600;
     }
   }
+
+  &>div:nth-child(2) {
+    
+    button {
+      color: var(--white-color);
+      background: var(--primary-color);
+      border: none;
+      outline: none;
+      border-radius: 8px;
+      width: 148px;
+      height: 62px;
+      cursor: pointer;
+    }
+  }
 }
 
 .modal {
