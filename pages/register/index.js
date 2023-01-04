@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import axios from "axios";
-import { toast } from "react-toastify";
+import { toast } from 'react-toastify';
 
 const Register = () => {
   const [fullName, setFullName] = useState("");
@@ -11,12 +11,12 @@ const Register = () => {
   const router = useRouter();
 
   const handleNext = async (e) => {
-    e.preventDefault();
+    e.preventDefault()
     const body = { fullName, email, password };
-    localStorage.setItem("homeTechMail", email);
+    localStorage.setItem('homeTechMail', email)
     try {
       await axios.post("/api/register", body);
-      toast.success(`${fullName} successfully registered`);
+      toast.success(`${fullName} successfully registered`)
       router.push("/colors/register");
     } catch (error) {
       console.log(error);
