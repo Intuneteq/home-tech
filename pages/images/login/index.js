@@ -31,6 +31,7 @@ const ImageLogin = () => {
       handleNext={handleNext}
       setImageString={setImageString}
       loading={loading}
+      imageString={imageString}
     />
   );
 };

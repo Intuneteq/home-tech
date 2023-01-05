@@ -26,7 +26,7 @@ const RegisterImage = () => {
     }
   };
 
-  return <Images handleNext={handleNext} setImageString={setImageString} />;
+  return <Images handleNext={handleNext} imageString={imageString} setImageString={setImageString} />;
 };
 
 export default RegisterImage;
