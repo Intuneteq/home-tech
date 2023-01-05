@@ -2,8 +2,10 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
 
+import useAppProvider from "../../hooks/useAppProvider";
+
 const Dashboard = () => {
-  const [fullName, setFullName] = useState("");
+  const { fullName, setFullName } = useAppProvider();
   const router = useRouter();
 
   useEffect(() => {
