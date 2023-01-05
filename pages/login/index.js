@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import axios from "axios";
@@ -7,22 +7,45 @@ import { toast } from "react-toastify";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [errMsg, setErrMsg] = useState("");
+  const [emailErrMsg, setEmailErrMsg] = useState("");
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
+  const emailRef = useRef();
+
+  useEffect(() => {
+    setErrMsg("");
+    setEmailErrMsg("");
+  }, [email, password]);
+
+  useEffect(() => {
+    emailRef.current.focus();
+  }, []);
 
   const handleLogin = async () => {
-    console.log('here', email, password)
     setLoading(true);
     try {
       await axios.post("/api/login", { email, password });
-      localStorage.setItem('homeTechMail', email)
+      localStorage.setItem("homeTechMail", email);
       toast.success("Login Successfull");
       router.push("/colors/login");
     } catch (error) {
       console.log(error);
-      error?.response?.data === undefined || error?.response?.data === null
-        ? toast.error("something went wrong")
-        : toast.error(error.response.data.message);
+      switch (error?.response?.status) {
+        case 400:
+          setErrMsg("email and password required");
+          break;
+        case 404:
+          setEmailErrMsg("Invalid email address");
+          break;
+        case 401:
+          setErrMsg("Sorry, you have entered a wrong password");
+          break;
+        default:
+          setErrMsg("No server response");
+          break;
+      }
     }
     setLoading(false);
   };
@@ -43,28 +66,41 @@ const Login = () => {
           <p className="dense">2</p>
           <p className="dense">3</p>
         </div>
-        <div className="modal-input">
+        <div className={emailErrMsg ? "modal-input error" : "modal-input"}>
           <input
+            ref={emailRef}
             type="email"
             placeholder="Email address"
             onChange={(e) => setEmail(e.target.value)}
+            className={"email-error input-error"}
           />
           <Image src={"/sms.svg"} width={24} height={24} alt="email" />
         </div>
-        <div className="modal-input">
+        <span className={emailErrMsg ? "error-span" : "offscreen"}>
+          {emailErrMsg}
+        </span>
+        <div className={errMsg ? "modal-input error" : "modal-input"}>
           <input
-            type="password"
+            type={showPassword ? "text" : "password"}
             placeholder="Password"
             onChange={(e) => setPassword(e.target.value)}
+            className={errMsg ? "input-error" : null}
           />
-          <Image src={"/eye-slash.svg"} width={24} height={24} alt="email" />
+          <Image
+            onClick={() => setShowPassword(!showPassword)}
+            src={showPassword ? "/showpassword.png" : "/eye-slash.svg"}
+            width={24}
+            height={24}
+            alt="email"
+          />
         </div>
+        <span className={errMsg ? "error-span" : "offscreen"}>{errMsg}</span>
         <div
           style={{ marginTop: "22px", marginBottom: "10px" }}
           className="modal-btn column-flex"
         >
           <button onClick={handleLogin} className="primary-btn">
-            {loading ? 'Signing In...' : 'Next'}
+            {loading ? "Signing In..." : "Next"}
           </button>
         </div>
         <p style={{ marginBottom: "44px" }} className="p-text">
@@ -74,6 +110,7 @@ const Login = () => {
               color: "#0076A7",
               fontWeight: "700",
             }}
+            onClick={() => router.push("/register")}
           >
             Register
           </span>

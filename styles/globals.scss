@@ -116,6 +116,11 @@ body {
   font-size: 16px;
   font-weight: 700;
   cursor: pointer;
+  transition: 0.3s all ease-in-out;
+
+  &:hover {
+    background-color: #368FB4;
+  }
 }
 
 .secondary-btn {
@@ -154,8 +159,7 @@ body {
     }
   }
 
-  &>div:nth-child(2) {
-    
+  & > div:nth-child(2) {
     button {
       color: var(--white-color);
       background: var(--primary-color);
@@ -207,6 +211,31 @@ body {
     }
   }
 
+  .error-span {
+    color: #ee0e0e;
+    font-size: 12px;
+    font-weight: 400;
+    margin-top: 6px;
+    position: relative;
+    margin-bottom: 20px;
+    text-align: left;
+    width: 400px;
+  }
+
+  .error {
+    margin-bottom: 0 !important;
+
+    .input-error {
+      border: 1px solid red;
+      color: red;
+    }
+  }
+
+  .offscreen {
+    display: none;
+  }
+ 
+
   .modal-input {
     width: 400px;
     height: 58px;
@@ -242,6 +271,8 @@ body {
       transform: translateY(-50%);
     }
   }
+
+
 
   .modal-colors {
     width: 400px;
@@ -290,7 +321,7 @@ body {
 
 .dashboard {
   padding: 192px 0;
-  color: #FFFFFF;
+  color: #ffffff;
 
   h6 {
     font-weight: 500;
@@ -330,6 +361,10 @@ body {
     }
 
     .progress {
+      width: 100%;
+    }
+
+    .error-span {
       width: 100%;
     }
 
