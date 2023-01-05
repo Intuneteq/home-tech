@@ -59,7 +59,7 @@ const ImagePattern = ({ handleSubmit, imgPattern, loading }) => {
   };
 
   return (
-    <main style={{ height: "100vh" }} className="app__flex">
+    <main style={{ height: "100vh" }} className="app__flex main">
       <article className="column-flex modal">
         <h1 style={{ marginBottom: "8px" }} className="head-text">
           Select Your Image Pattern

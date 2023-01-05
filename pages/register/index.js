@@ -29,7 +29,7 @@ const Register = () => {
     setLoading(false);
   };
   return (
-    <main style={{ height: "100vh" }} className="app__flex">
+    <main style={{ height: "100vh" }} className="app__flex main">
       <article className="column-flex modal">
         <h1 style={{ marginBottom: "8px" }} className="head-text">
           Create an Account

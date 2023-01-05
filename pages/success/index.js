@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 const Success = () => {
     const router = useRouter()
   return (
-    <main style={{ height: "100vh" }} className="app__flex">
+    <main style={{ height: "100vh" }} className="app__flex main">
         <article className="column-flex modal">
             <h1 style={{ marginBottom: "21px" }} className="head-text">Congratulations</h1>
             <p className="p-text-2" style={{ marginBottom: "40px" }}>Your account has been created<br/>successfully</p>

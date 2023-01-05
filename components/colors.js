@@ -26,7 +26,7 @@ const Colors = ({ handleNext, colorArray, loading }) => {
   };
 
   return (
-    <main style={{ height: "100vh" }} className="app__flex">
+    <main style={{ height: "100vh" }} className="app__flex main">
       <article className="modal column-flex">
         <h1 style={{ marginBottom: "8px" }} className="head-text">
           Select Your Color Combination

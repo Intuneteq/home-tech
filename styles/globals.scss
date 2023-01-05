@@ -379,6 +379,14 @@ body {
 
     .progress {
       width: 100%;
+
+      div {
+        width: 55%;
+
+        img {
+          width: 80%;
+        }
+      }
     }
 
     .error-span {
@@ -387,6 +395,10 @@ body {
 
     .modal-input {
       width: 100%;
+
+      input {
+        max-width: 100%;
+      }
     }
 
     .modal-colors {
@@ -416,15 +428,30 @@ body {
 }
 @media screen and (max-width: 480px) {
   .nav {
+    height: 60px;
     padding: 0 20px;
+
+    div {
+      img {
+        width: 30px;
+        height: 30px;
+      }
+    }
   }
+
+
 
   .outlet {
     padding: 5px 0;
   }
 
+  .main {
+    overflow-y: scroll;
+  }
+
   .modal {
     padding: 72px 20px 37px;
+    margin: 0;
     width: 95%;
 
     h1 {

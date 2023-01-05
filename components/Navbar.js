@@ -7,13 +7,7 @@ import useAppProvider from "../hooks/useAppProvider";
 
 const Navbar = () => {
   const { fullName, setFullName } = useAppProvider();
-  // const [token, setToken] = useState("");
   const router = useRouter();
-
-  // useEffect(() => {
-  //   const auth = localStorage.getItem('home-tech')
-  //   setToken(auth)
-  // }, []);
 
   const handleLogOut = () => {
     localStorage.clear();
