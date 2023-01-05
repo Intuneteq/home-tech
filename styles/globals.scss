@@ -436,6 +436,11 @@ body {
         width: 30px;
         height: 30px;
       }
+
+      button {
+        height: 40px !important;
+        width: 40px;
+      }
     }
   }
 
@@ -447,11 +452,13 @@ body {
 
   .main {
     overflow-y: scroll;
+    align-items: flex-start;
+    justify-content: center;
   }
 
   .modal {
     padding: 72px 20px 37px;
-    margin: 0;
+    margin: 25px 0;
     width: 95%;
 
     h1 {
@@ -459,9 +466,35 @@ body {
     }
 
     .progress {
+      width: 100%;
       img {
-        width: 90px;
+        width: 20%;
       }
+
+      div {
+        img {
+          width: 50%;
+        }
+      }
+    }
+
+    .modal-grid {
+      width: 100%;
+      max-width: 350px;
+  
+      img {
+        width: 60px;
+        height: 60px;
+      }
+    }
+  }
+
+  .dashboard {
+    padding: 100px 0;
+    justify-content: flex-start;
+  
+    button {
+      width: 80%;
     }
   }
 }
