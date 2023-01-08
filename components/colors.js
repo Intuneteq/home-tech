@@ -50,9 +50,7 @@ const Colors = ({ handleNext, colorArray, loading }) => {
         >
           <Image
             className={toggleActiveClassName("#115FDB")}
-            onAnimationEnd={() =>
-              setAnimate({ ...animate, activeColor: null })
-            }
+            onAnimationEnd={() => setAnimate({ ...animate, activeColor: null })}
             src={"/blue.png"}
             width={80}
             height={80}
@@ -61,9 +59,7 @@ const Colors = ({ handleNext, colorArray, loading }) => {
           />
           <Image
             className={toggleActiveClassName("#F65B2B")}
-            onAnimationEnd={() =>
-              setAnimate({ ...animate, activeColor: null })
-            }
+            onAnimationEnd={() => setAnimate({ ...animate, activeColor: null })}
             src={"/orange.png"}
             width={80}
             height={80}
@@ -72,9 +68,7 @@ const Colors = ({ handleNext, colorArray, loading }) => {
           />
           <Image
             className={toggleActiveClassName("#E5017C")}
-            onAnimationEnd={() =>
-              setAnimate({ ...animate, activeColor: null })
-            }
+            onAnimationEnd={() => setAnimate({ ...animate, activeColor: null })}
             src={"/red.png"}
             width={80}
             height={80}
@@ -83,7 +77,11 @@ const Colors = ({ handleNext, colorArray, loading }) => {
           />
         </div>
         <div style={{ marginBottom: "140px" }} className="modal-btn">
-          <button disabled={colorArray.length < 3 ? true : false} onClick={handleNext} className="primary-btn">
+          <button
+            disabled={colorArray.length < 3 ? true : false}
+            onClick={handleNext}
+            className="primary-btn"
+          >
             {loading ? "Validating..." : "Next"}
           </button>
         </div>

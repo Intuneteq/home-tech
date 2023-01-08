@@ -4,16 +4,15 @@ import { useRouter } from "next/router";
 
 import useAppProvider from "../hooks/useAppProvider";
 
-
 const Navbar = () => {
   const { fullName, setFullName } = useAppProvider();
   const router = useRouter();
 
   const handleLogOut = () => {
     localStorage.clear();
-    setFullName('')
-    router.push('/');
-  }
+    setFullName("");
+    router.push("/");
+  };
 
   return (
     <nav className="nav app__flex-2">
@@ -22,7 +21,11 @@ const Navbar = () => {
         <p className="p-text">HomeTech</p>
       </div>
       <div>
-        {fullName ? <button onClick={handleLogOut}>Logout</button> : <p className="p-text">About us</p>}
+        {fullName ? (
+          <button onClick={handleLogOut}>Logout</button>
+        ) : (
+          <p className="p-text">About us</p>
+        )}
       </div>
     </nav>
   );

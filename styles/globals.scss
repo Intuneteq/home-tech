@@ -143,16 +143,16 @@ body {
   transition: 0.3s all ease-in-out;
 
   &:hover {
-    background-color: #BDE0EF;
-    border: 2px solid #0076A7;
-    color: #0076A7;
+    background-color: #bde0ef;
+    border: 2px solid #0076a7;
+    color: #0076a7;
   }
 
   &:disabled,
   &[disabled] {
-    background-color: #92AEB9;
-    border: 1.5px solid #92AEB9;
-    color: #A3BCC7;
+    background-color: #92aeb9;
+    border: 1.5px solid #92aeb9;
+    color: #a3bcc7;
   }
 }
 
@@ -444,8 +444,6 @@ body {
     }
   }
 
-
-
   .outlet {
     padding: 5px 0;
   }
@@ -481,7 +479,7 @@ body {
     .modal-grid {
       width: 100%;
       max-width: 350px;
-  
+
       img {
         width: 60px;
         height: 60px;
@@ -492,7 +490,7 @@ body {
   .dashboard {
     padding: 100px 0;
     justify-content: flex-start;
-  
+
     button {
       width: 80%;
     }
