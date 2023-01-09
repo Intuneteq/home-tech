@@ -26,7 +26,7 @@ const Dashboard = () => {
   return (
     <main style={{minHeight: '100vh'}} className="dashboard column-flex">
       <h6>welcome</h6>
-      <h1>{fullName}</h1>
+      <h1>{fullName.toUpperCase()}</h1>
       <button onClick={() => router.push("/")}>Goto Dashboard</button>
     </main>
   );
