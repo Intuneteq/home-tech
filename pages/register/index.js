@@ -62,7 +62,7 @@ const Register = () => {
           <input
             type="email"
             placeholder="Email address"
-            onChange={(e) => setEmail(e.target.value.toLowerCase())}
+            onChange={(e) => setEmail(e.target.value)}
           />
           <Image src={"/sms.svg"} width={24} height={24} alt="email" />
         </div>

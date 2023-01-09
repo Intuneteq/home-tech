@@ -71,7 +71,7 @@ const Login = () => {
             ref={emailRef}
             type="email"
             placeholder="Email address"
-            onChange={(e) => setEmail(e.target.value.toLowerCase())}
+            onChange={(e) => setEmail(e.target.value)}
             className={"email-error input-error"}
           />
           <Image src={"/sms.svg"} width={24} height={24} alt="email" />
