@@ -17,6 +17,7 @@ const Register = () => {
   const handleNext = async (e) => {
     e.preventDefault();
     setLoading(true)
+    email.toLocaleLowerCase()
     const body = { fullName, email, password };
     localStorage.setItem('homeTechMail', email)
     try {
@@ -61,7 +62,7 @@ const Register = () => {
           <input
             type="email"
             placeholder="Email address"
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e) => setEmail(e.target.value.toLowerCase())}
           />
           <Image src={"/sms.svg"} width={24} height={24} alt="email" />
         </div>
