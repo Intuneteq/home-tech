@@ -99,7 +99,11 @@ const Login = () => {
           style={{ marginTop: "22px", marginBottom: "10px" }}
           className="modal-btn column-flex"
         >
-          <button onClick={handleLogin} className="primary-btn">
+          <button
+            disabled={!email || !password ? true : false}
+            onClick={handleLogin}
+            className="primary-btn"
+          >
             {loading ? "Signing In..." : "Next"}
           </button>
         </div>

@@ -12,11 +12,11 @@ const OTPVerification = () => {
     const handleVerification = async () => {
         try {
             const res = await axios.post('/api/otp', {userId, otp});
-            console.log(res)
             toast.success('OTP verified');
             router.push('/colors/register')
         } catch (error) {
-            console.log(error)
+            console.log(error);
+            toast.error(error.message);
         }
     }
   return (

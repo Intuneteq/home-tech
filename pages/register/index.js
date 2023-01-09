@@ -77,7 +77,7 @@ const Register = () => {
           style={{ marginTop: "22px", marginBottom: "10px" }}
           className="modal-btn column-flex"
         >
-          <button onClick={handleNext} className="primary-btn">
+          <button disabled={!email || !fullName || !password ? true : false} onClick={handleNext} className="primary-btn">
             {loading ? 'Signing up...' : 'Next'}
           </button>
         </div>
