@@ -36,7 +36,10 @@ export default async function handler(req, res) {
         newUser._id
       );
 
-      if (error) return res.status(500).json({ message });
+      if (error) {
+        await newUser.delete();
+        return res.status(500).json({ message });
+      }
 
       res.status(201).json({
         success: "PENDING",
