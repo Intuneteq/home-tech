@@ -9,8 +9,14 @@ const UserOTPVerificationSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    createdAt: Date,
-    expiresAt: Date 
+    createdAt: {
+        type: Date,
+        required: true
+    },
+    expiresAT: {
+        type: Date,
+        required: true
+    } 
 });
 
 module.exports = mongoose.models.UserOTPVerification || mongoose.model("UserOTPVerification", UserOTPVerificationSchema);

@@ -2,6 +2,7 @@ import bcrypt from "bcrypt";
 
 import User from "../../models/user";
 import UserOTPVerification from "../../models/UserOTPVerification";
+import dbConnect from "../../lib/dbConnect";
 
 export default async function handler(req, res) {
   const { method } = req;
@@ -13,7 +14,7 @@ export default async function handler(req, res) {
     try {
       if (!userId || !otp)
         return res.status(400).json({ success: false, message: "bad request" });
-      const verifyRecords = UserOTPVerification.find({ userId });
+      const verifyRecords = await UserOTPVerification.find({ userId });
       if (verifyRecords <= 0) {
         res.status(404).json({
           success: false,
@@ -23,7 +24,7 @@ export default async function handler(req, res) {
       } else {
         const { expiresAt, otp: hashedOTP } = verifyRecords[0];
         if (expiresAt < Date.now()) {
-          await verifyRecords.deleteMany({ userId });
+          await UserOTPVerification.deleteMany({ userId });
           res.status(401).json({
             success: false,
             message: "code has expired, Please request again",
@@ -37,7 +38,7 @@ export default async function handler(req, res) {
             });
           } else {
             await User.updateOne({ _id: userId }, { verified: true });
-            await verifyRecords.deleteMany({ userId });
+            await UserOTPVerification.deleteMany({ userId: userId });
             res.status(200).json({
               success: true,
               status: "VERIFIEID",

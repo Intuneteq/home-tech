@@ -4,12 +4,15 @@ import { useRouter } from "next/router";
 import axios from "axios";
 import { toast } from 'react-toastify';
 
+import useAppProvider from "../../hooks/useAppProvider";
+
 const Register = () => {
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState('');
   const router = useRouter();
+  const { setuserId } = useAppProvider();
 
   const handleNext = async (e) => {
     e.preventDefault();
@@ -17,9 +20,11 @@ const Register = () => {
     const body = { fullName, email, password };
     localStorage.setItem('homeTechMail', email)
     try {
-      await axios.post("/api/register", body);
-      toast.success(`${fullName} successfully registered`)
-      router.push("/colors/register");
+      const res = await axios.post("/api/register", body);
+      console.log(res.data.userId);
+      setuserId(res.data.userId)
+      toast.success(`verify your otp`)
+      router.push("/otp");
     } catch (error) {
       console.log(error);
       error?.response?.data === undefined || error?.response?.data === null
