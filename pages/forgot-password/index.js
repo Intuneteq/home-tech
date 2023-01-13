@@ -1,15 +1,25 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect, useMemo } from "react";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { HiArrowNarrowLeft } from "react-icons/hi";
 import axios from "axios";
+import { toast } from 'react-toastify';
+
+import useAppProvider from "../../hooks/useAppProvider";
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
+  const [validEmail, setValidEmail] = useState(false);
   const [emailErrMsg, setEmailErrMsg] = useState("");
   const [loading, setLoading] = useState(false);
   const router = useRouter();
   const emailRef = useRef();
+  const { setuserId } = useAppProvider();
+  const Email_REGEX = useMemo(() => /^\S+@\S+\.\S+$/, [])
+
+  useEffect(() => {
+    setValidEmail(Email_REGEX.test(email));
+  }, [email, Email_REGEX]);
 
   useEffect(() => {
     setEmailErrMsg("");
@@ -19,10 +29,29 @@ const ForgotPassword = () => {
     emailRef.current.focus();
   }, []);
 
-  const handleForgotPassword = () => {
+  const handleForgotPassword = async () => {
     setLoading(true);
-    // const res = axios.post()
+    try {
+      const res = await axios.post('/api/forgotPassword', {email});
+    setuserId(res.data.userId);
+    toast.success(`verify your otp`);
     router.push("/emailLink");
+    } catch (error) {
+      console.log(error);
+      const errorStatus = error.response.status
+      switch (errorStatus) {
+        case 404:
+          setEmailErrMsg("email does not exist")
+          break;
+        case 500: 
+        setEmailErrMsg("No server response")
+        break;
+        default:
+          setEmailErrMsg('could not verify emaill address')
+          break;
+      }
+    }
+    setLoading(false);
   };
 
   return (
@@ -48,12 +77,15 @@ const ForgotPassword = () => {
           />
           <Image src={"/sms.svg"} width={24} height={24} alt="email" />
         </div>
+        <span className={emailErrMsg ? "error-span" : "offscreen"}>
+          {emailErrMsg}
+        </span>
         <div
           style={{ marginTop: "22px", marginBottom: "156px" }}
           className="modal-btn column-flex"
         >
           <button
-            disabled={!email ? true : false}
+            disabled={!validEmail ? true : false}
             onClick={handleForgotPassword}
             className="primary-btn"
           >

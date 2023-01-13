@@ -22,7 +22,6 @@ const Register = () => {
     localStorage.setItem('homeTechMail', email)
     try {
       const res = await axios.post("/api/register", body);
-      console.log(res.data.userId);
       setuserId(res.data.userId)
       toast.success(`verify your otp`)
       router.push("/otp");
