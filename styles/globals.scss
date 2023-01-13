@@ -157,6 +157,22 @@ body {
   }
 }
 
+.tertiary-btn {
+  width: 100%;
+  background: none;
+  border: none;
+
+  color: var(--primary-color);
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.3s all ease-in-out;
+
+  &:hover {
+    color: #0076a7;
+  }
+}
+
 .test {
   border: 1px solid red;
 }
