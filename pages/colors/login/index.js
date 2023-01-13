@@ -6,12 +6,10 @@ import Colors from "../../../components/colors";
 
 const LoginColor = () => {
   const [loading, setLoading] = useState(false);
+  const [colorArray, setColorArray] = useState([]);
   const router = useRouter();
-  const colorArray = [];
   function clearArray() {
-    while (colorArray.length > 0) {
-      colorArray.pop();
-    }
+    setColorArray([]);
   }
 
   const handleNext = async () => {
@@ -35,7 +33,7 @@ const LoginColor = () => {
   };
 
   return (
-    <Colors loading={loading} handleNext={handleNext} colorArray={colorArray} />
+    <Colors loading={loading} handleNext={handleNext} colorArray={colorArray} setColorArray={setColorArray} />
   );
 };
 

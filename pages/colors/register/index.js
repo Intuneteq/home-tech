@@ -1,14 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/router";
 import { toast } from "react-toastify";
 import axios from "axios";
 import Colors from "../../../components/colors";
 
 const RegisterColor = () => {
+  const [loading, setLoading] = useState(false);
+  const [colorArray, setColorArray] = useState([]);
   const router = useRouter();
-  const colorArray = [];
 
   const handleNext = async () => {
+    setLoading(true);
     const email = localStorage.getItem("homeTechMail");
     try {
       await axios.post("/api/colors/register", {
@@ -23,9 +25,10 @@ const RegisterColor = () => {
         ? toast.error("something went wrong")
         : toast.error(error.response.data.message);
     }
+    setLoading(false);
   };
 
-  return <Colors handleNext={handleNext} colorArray={colorArray} />;
+  return <Colors loading={loading} handleNext={handleNext} colorArray={colorArray} setColorArray={setColorArray} />;
 };
 
 export default RegisterColor;

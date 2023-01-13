@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Image from "next/image";
 import { toast } from "react-toastify";
 
-const Colors = ({ handleNext, colorArray, loading }) => {
+const Colors = ({ handleNext, colorArray, setColorArray, loading }) => {
   const [animate, setAnimate] = useState({
     activeColor: null,
   });
@@ -13,7 +13,7 @@ const Colors = ({ handleNext, colorArray, loading }) => {
     if (colorExistInArray) {
       toast.warn("you already selected this");
     } else {
-      colorArray.push(hexCode);
+      setColorArray([...colorArray, hexCode])
     }
   };
 
@@ -24,6 +24,10 @@ const Colors = ({ handleNext, colorArray, loading }) => {
       return "";
     }
   };
+
+  const handleReset = () => {
+    setColorArray([]);
+  }
 
   return (
     <main style={{ height: "100vh" }} className="app__flex main">
@@ -76,7 +80,7 @@ const Colors = ({ handleNext, colorArray, loading }) => {
             onClick={() => handlePush("#E5017C")}
           />
         </div>
-        <div style={{ marginBottom: "140px" }} className="modal-btn">
+        <div style={{ marginBottom: "10px" }} className="modal-btn">
           <button
             disabled={colorArray.length < 3 ? true : false}
             onClick={handleNext}
@@ -84,6 +88,9 @@ const Colors = ({ handleNext, colorArray, loading }) => {
           >
             {loading ? "Validating..." : "Next"}
           </button>
+        </div>
+        <div style={{ marginBottom: "140px" }} className="modal-btn">
+          <button onClick={handleReset} disabled={colorArray.length >= 1 ? false : true} className="primary-btn">Reset</button>
         </div>
         <div className="modal-footer app__flex-2">
           <p>Privacy and Policy</p>
