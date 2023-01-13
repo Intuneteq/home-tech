@@ -107,18 +107,21 @@ const Login = () => {
             {loading ? "Signing In..." : "Next"}
           </button>
         </div>
-        <p style={{ marginBottom: "44px" }} className="p-text">
-          Don’t have an account{" "}
-          <span
-            style={{
-              color: "#0076A7",
-              fontWeight: "700",
-            }}
-            onClick={() => router.push("/register")}
-          >
-            Register
-          </span>
-        </p>
+        <div style={{ marginBottom: "44px" }} className="app__flex-2 extras">
+          <p className="p-text">
+            Don’t have an account?{" "}
+            <span
+              style={{
+                color: "#0076A7",
+                fontWeight: "700",
+              }}
+              onClick={() => router.push("/register")}
+            >
+              Register
+            </span>
+          </p>
+          <span onClick={() => router.push('/forgot-password')} className="p-text">forgot Password?</span>
+        </div>
         <div className="modal-footer app__flex-2">
           <p>Privacy and Policy</p>
           <p>FAQ</p>

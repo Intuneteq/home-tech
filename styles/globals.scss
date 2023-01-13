@@ -199,6 +199,20 @@ body {
   width: 45%;
   border-radius: 8px;
   background: var(--white-color);
+  position: relative;
+
+  .modal-arrow {
+    position: absolute;
+    top: 26px;
+    left: 40px;
+    cursor: pointer;
+
+    svg {
+      width: 24px;
+      height: 24px;
+      color: #131313;
+    }
+  }
 
   .modal-btn {
     width: 400px;
@@ -229,6 +243,14 @@ body {
     .dense {
       border: 1px solid var(--primary-color);
       color: var(--primary-color);
+    }
+  }
+
+  .extras {
+    width: 400px;
+
+    span {
+      cursor: pointer;
     }
   }
 
@@ -388,6 +410,10 @@ body {
           width: 80%;
         }
       }
+    }
+
+    .extras {
+      width: 100%;
     }
 
     .error-span {
