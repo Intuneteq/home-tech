@@ -21,7 +21,7 @@ const EmailLink = () => {
           style={{  marginBottom: "16px" }}
           className="modal-btn column-flex"
         >
-          <button onClick={() => router.push('/reset-password')} className="primary-btn">Go to Email</button>
+          <button onClick={() => router.push('/otp')} className="primary-btn">Go to Email</button>
         </div>
         <div
           style={{ marginTop: "22px", marginBottom: "156px" }}

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import axios from "axios";
@@ -9,10 +9,16 @@ import useAppProvider from "../../hooks/useAppProvider";
 const Register = () => {
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
+  const [validEmail, setValidEmail] = useState(false);
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState('');
   const router = useRouter();
   const { setuserId } = useAppProvider();
+  const Email_REGEX = useMemo(() => /^\S+@\S+\.\S+$/, []);
+
+  useEffect(() => {
+    setValidEmail(Email_REGEX.test(email));
+  }, [email, Email_REGEX]);
 
   const handleNext = async (e) => {
     e.preventDefault();
@@ -77,7 +83,7 @@ const Register = () => {
           style={{ marginTop: "22px", marginBottom: "10px" }}
           className="modal-btn column-flex"
         >
-          <button disabled={!email || !fullName || !password ? true : false} onClick={handleNext} className="primary-btn">
+          <button disabled={!validEmail || !fullName || !password ? true : false} onClick={handleNext} className="primary-btn">
             {loading ? 'Signing up...' : 'Next'}
           </button>
         </div>

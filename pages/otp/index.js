@@ -1,50 +1,71 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
 
-import useAppProvider from '../../hooks/useAppProvider';
+import useAppProvider from "../../hooks/useAppProvider";
+import { HiArrowNarrowLeft } from "react-icons/hi";
 
 const OTPVerification = () => {
-    const [otp, setOTP] = useState("");
-    const { userId } = useAppProvider();
-    const router = useRouter()
-    const handleVerification = async () => {
-        try {
-            const res = await axios.post('/api/otp', {userId, otp});
-            toast.success('OTP verified');
-            router.push('/colors/register')
-        } catch (error) {
-            console.log(error);
-            toast.error(error.message);
-        }
+  const [otp, setOTP] = useState("");
+  const { userId } = useAppProvider();
+  const router = useRouter();
+  const handleVerification = async () => {
+    try {
+      const res = await axios.post("/api/otp", { userId, otp });
+      toast.success("OTP verified");
+      router.push("/reset-password");
+    } catch (error) {
+      console.log(error);
+      toast.error(error.message);
     }
+  };
   return (
     <main style={{ height: "100vh" }} className="app__flex main">
-        <article className="column-flex modal">
+      <article className="column-flex modal">
+      <div className="modal-arrow">
+          <HiArrowNarrowLeft onClick={() => router.back()} />
+        </div>
         <h1 style={{ marginBottom: "12px" }} className="head-text">
-          Verify Your OTP
+          Verify Your Email
         </h1>
+        <p style={{ marginBottom: "40px" }} className="p-text-2">
+          Enter the code sent to{" "}
+          <b style={{ color: "#131313" }}>salihuahmedrufai@gmail.com</b> to
+          verify your email address
+        </p>
         <div className="modal-input">
           <input
             type="text"
-            placeholder="Input OTP"
-            onChange={(e)=>setOTP(e.target.value)}
+            placeholder="Enter OTP code"
+            onChange={(e) => setOTP(e.target.value)}
           />
         </div>
-        <div
-          style={{ marginBottom: "10px" }}
-          className="modal-btn column-flex"
-        >
-          <button onClick={handleVerification} className="primary-btn">Submit</button>
+        <div style={{marginBottom: '40px'}} className="extras app__flex-5">
+          <p className="p-text">
+            Didn’t the get code?{" "}
+            <span
+              style={{
+                color: "#0076A7",
+                fontWeight: "700",
+              }}
+            >
+              Resend code
+            </span>
+          </p>
+        </div>
+        <div style={{ marginBottom: "40px" }} className="modal-btn column-flex">
+          <button disabled={otp ? false : true} onClick={handleVerification} className="primary-btn">
+            Submit
+          </button>
         </div>
         <div className="modal-footer app__flex-2">
           <p>Privacy and Policy</p>
           <p>FAQ</p>
         </div>
-        </article>
+      </article>
     </main>
-  )
-}
+  );
+};
 
 export default OTPVerification;

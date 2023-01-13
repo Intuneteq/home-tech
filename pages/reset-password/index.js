@@ -1,10 +1,53 @@
+import React, { useEffect, useState, useRef } from "react";
 import Image from "next/image";
-import React from "react";
 import { useRouter } from "next/router";
 import { HiArrowNarrowLeft } from "react-icons/hi";
+import axios from "axios";
+import { toast } from "react-toastify";
+
+import useAppProvider from "../../hooks/useAppProvider";
 
 const ResetPassword = () => {
-    const router = useRouter();
+  const [loading, setLoading] = useState(false);
+  const [password, setPassword] = useState(null);
+  const [errMsg, setErrMsg] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [passwordMatch, setPasswordMatch] = useState(false);
+  const router = useRouter();
+  const { userId } = useAppProvider();
+
+  useEffect(() => {
+    setErrMsg("");
+  }, [confirmPassword]);
+
+  useEffect(() => {
+    setPasswordMatch(password === confirmPassword);
+  }, [confirmPassword, password]);
+
+  useEffect(() => {
+    if (confirmPassword && !passwordMatch) {
+      setErrMsg("Your password does not match");
+    } else if (confirmPassword && passwordMatch) {
+      setErrMsg("");
+    }
+  }, [confirmPassword, passwordMatch]);
+
+  const handleResetPassword = async () => {
+    setLoading(true);
+    try {
+      console.log('user', userId, password)
+      await axios.post('/api/changePassword', {userId, password});
+      router.push("/colors/register");
+      toast.success('password changed')
+    } catch (error) {
+      console.log(error);
+      error?.response?.data === undefined || error?.response?.data === null
+        ? toast.error("something went wrong")
+        : toast.error(error.response.data.message);
+    }
+    setLoading(false);
+  }
+
   return (
     <main style={{ height: "100vh" }} className="app__flex main">
       <article className="column-flex modal">
@@ -12,39 +55,33 @@ const ResetPassword = () => {
           <HiArrowNarrowLeft onClick={() => router.back()} />
         </div>
         <h1 style={{ marginBottom: "8px" }} className="head-text">
-        Reset Password
+          Reset Password
         </h1>
         <p style={{ marginBottom: "20px" }} className="p-text-2">
-        Create a new password below to<br/> continue
+          Create a new password below to
+          <br /> continue
         </p>
         <div style={{ marginBottom: "45px" }} className="progress app__flex-2">
           <p className="filled">1</p>
           <p className="dense">2</p>
           <p className="dense">3</p>
         </div>
-        <div
-        //  className={emailErrMsg ? "modal-input error" : "modal-input"}
-        className="modal-input"
-         >
+        <div className="modal-input">
           <input
-            // ref={emailRef}
-            type="text"
+            type="password"
             placeholder="New Password"
-            // onChange={(e) => setEmail(e.target.value.toLowerCase())}
+            onChange={(e) => setPassword(e.target.value)}
             className={"email-error input-error"}
           />
-          <Image src={"/sms.svg"} width={24} height={24} alt="email" />
+          <Image src={"/eye-slash.svg"} width={24} height={24} alt="email" />
         </div>
-        <div 
-        // className={errMsg ? "modal-input error" : "modal-input"}
-        className="modal-input"
-        >
+        <div className={errMsg ? "modal-input error" : "modal-input"}>
           <input
             // type={showPassword ? "text" : "password"}
-            type={"text"}
+            type={"password"}
             placeholder="Confirm New Password"
-            // onChange={(e) => setPassword(e.target.value)}
-            // className={errMsg ? "input-error" : null}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            className={errMsg ? "input-error" : null}
           />
           <Image
             // onClick={() => setShowPassword(!showPassword)}
@@ -55,11 +92,18 @@ const ResetPassword = () => {
             alt="email"
           />
         </div>
+        <span className={errMsg ? "error-span" : "offscreen"}>{errMsg}</span>
         <div
-          style={{  marginBottom: "132px", marginTop: '20px'}}
+          style={{ marginBottom: "132px", marginTop: "20px" }}
           className="modal-btn column-flex"
         >
-          <button onClick={() => router.push('/reset-password')} className="primary-btn">Reset Password</button>
+          <button
+            disabled={passwordMatch ? false : true}
+            onClick={handleResetPassword}
+            className="primary-btn"
+          >
+            {loading ? 'validating...' :"Reset Password"}
+          </button>
         </div>
         <div className="modal-footer app__flex-2">
           <p>Privacy and Policy</p>
