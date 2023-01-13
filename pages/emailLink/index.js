@@ -21,13 +21,13 @@ const EmailLink = () => {
           style={{  marginBottom: "16px" }}
           className="modal-btn column-flex"
         >
-          <button className="primary-btn">Go to Email</button>
+          <button onClick={() => router.push('/reset-password')} className="primary-btn">Go to Email</button>
         </div>
         <div
           style={{ marginTop: "22px", marginBottom: "156px" }}
           className="modal-btn column-flex"
         >
-          <button className="tertiary-btn">Back to Home</button>
+          <button onClick={() => router.push('/')} className="tertiary-btn">Back to Home</button>
         </div>
         <div className="modal-footer app__flex-2">
           <p>Privacy and Policy</p>
