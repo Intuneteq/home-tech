@@ -2,10 +2,12 @@ import React, { useRef, useState, useEffect } from "react";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { HiArrowNarrowLeft } from "react-icons/hi";
+import axios from "axios";
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
   const [emailErrMsg, setEmailErrMsg] = useState("");
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
   const emailRef = useRef();
 
@@ -18,6 +20,8 @@ const ForgotPassword = () => {
   }, []);
 
   const handleForgotPassword = () => {
+    setLoading(true);
+    // const res = axios.post()
     router.push("/emailLink");
   };
 
@@ -53,8 +57,7 @@ const ForgotPassword = () => {
             onClick={handleForgotPassword}
             className="primary-btn"
           >
-            {/* {loading ? "Signing In..." : "Next"} */}
-            Send Link
+            {loading ? "Sending..." : "Send Link"}
           </button>
         </div>
         <div className="modal-footer app__flex-2">
