@@ -2,7 +2,7 @@ import React, { useState, useEffect, useMemo } from "react";
 import Image from "next/image";
 import { toast } from "react-toastify";
 
-const ImagePattern = ({ handleSubmit, imgPattern, loading }) => {
+const ImagePattern = ({ handleSubmit, imgPattern, setImgPattern, loading }) => {
   const [active, setActive] = useState({
     activeObject: null,
     objects: [],
@@ -16,9 +16,13 @@ const ImagePattern = ({ handleSubmit, imgPattern, loading }) => {
     if (findIndex || imgPattern.length >= 3) {
       toast.warn("invalid");
     } else {
-      imgPattern.push(index);
+      setImgPattern([...imgPattern, index])
     }
   };
+
+  useEffect(() => {
+    console.log('img', imgPattern)
+  }, [imgPattern]);
 
   const grid = useMemo(
     () => [
@@ -58,8 +62,12 @@ const ImagePattern = ({ handleSubmit, imgPattern, loading }) => {
     }
   };
 
+  const handleReset =() => {
+    setImgPattern([]);
+  }
+
   return (
-    <main style={{ height: "100vh" }} className="app__flex main">
+    <main style={{ height: "100%" }} className="app__flex main">
       <article className="column-flex modal">
         <h1 style={{ marginBottom: "8px" }} className="head-text">
           Select Your Image Pattern
@@ -89,13 +97,22 @@ const ImagePattern = ({ handleSubmit, imgPattern, loading }) => {
             />
           ))}
         </div>
-        <div style={{ marginBottom: "62px" }} className="modal-btn column-flex">
+        <div style={{ marginBottom: "10px" }} className="modal-btn column-flex">
           <button
             disabled={imgPattern.length < 3 ? true : false}
             onClick={handleSubmit}
             className="primary-btn"
           >
             {loading ? "validating..." : "Submit"}
+          </button>
+        </div>
+        <div style={{ marginBottom: "62px" }} className="modal-btn column-flex">
+          <button
+            disabled={imgPattern.length >= 1 ? false : true}
+            onClick={handleReset}
+            className="primary-btn"
+          >
+            Reset
           </button>
         </div>
         <div className="modal-footer app__flex-2">
