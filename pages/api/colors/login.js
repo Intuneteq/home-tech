@@ -1,15 +1,19 @@
 import User from "../../../models/user";
 import dbConnect from "../../../lib/dbConnect";
 import authentication from "../../../lib/authentication";
+import { getSession } from "../../../lib/get-session";
 
 export default async function handler(req, res) {
   const { method } = req;
   await dbConnect();
-  
-  const {user, error, status, message} = await authentication(req);
+
+  const { user, error, status, message } = await authentication(req);
   const _id = user._id;
 
-  if(error) return res.status(status).json({success: false, message})
+  if (error) return res.status(status).json({ success: false, message });
+  const session = await getSession(req, res);
+  session.views = session.views ? session.views + 1 : 1;
+  const views = session.views;
 
   if (method === "POST") {
     const { colorCombination } = req.body;
@@ -33,10 +37,51 @@ export default async function handler(req, res) {
     const match =
       JSON.stringify(colorCombination) ===
       JSON.stringify(user.colorCombination);
-    if (!match)
+    if (!match && views == 1) {
       return res
         .status(401)
-        .json({ success: false, message: "incorrect combination" });
+        .json({
+          success: false,
+          message: "incorrect combination, you have two attempts left",
+          views,
+        });
+    } else if (!match && views == 2) {
+      return res
+        .status(401)
+        .json({
+          success: false,
+          message: "incorrect combination, you have one attempt left",
+          views,
+        });
+    } else if (!match && views >= 3) {
+      const date = new Date();
+      function addMins(numOfMins) {
+        date.setTime(date.getTime() + numOfMins * 60 * 1000);
+
+        return date;
+      }
+      const after10Mins = addMins(10);
+      if (after10Mins < date) {
+        return res
+          .status(401)
+          .json({
+            success: false,
+            message:
+              "incorrect combination, you have no more attempts left, try again in 10 mins",
+            views,
+          });
+      } else {
+        session.views = 0;
+        return res
+          .status(401)
+          .json({
+            success: false,
+            message: "incorrect combination, you have two attempts left",
+            views,
+          });
+      }
+    }
+
     res.status(200).json({ success: true });
   } else {
     res.status(404).json({ success: false, message: "resource not found" });

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Image from "next/image";
 import { toast } from "react-toastify";
 
-const Colors = ({ handleNext, colorArray, setColorArray, loading }) => {
+const Colors = ({ handleNext, colorArray, setColorArray, loading, errMsg }) => {
   const [animate, setAnimate] = useState({
     activeColor: null,
   });
@@ -89,10 +89,11 @@ const Colors = ({ handleNext, colorArray, setColorArray, loading }) => {
             {loading ? "Validating..." : "Next"}
           </button>
         </div>
-        <div style={{ marginBottom: "140px" }} className="modal-btn">
+        <div className="modal-btn">
           <button onClick={handleReset} disabled={colorArray.length >= 1 ? false : true} className="primary-btn">Reset</button>
         </div>
-        <div className="modal-footer app__flex-2">
+        <span style={{ marginTop: "17px" }} className={errMsg ? "error-span" : "offscreen"}>{errMsg}</span>
+        <div style={{ marginTop: "140px" }} className="modal-footer app__flex-2">
           <p>Privacy and Policy</p>
           <p>FAQ</p>
         </div>
