@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { useRouter } from "next/router";
 import { toast } from "react-toastify";
-import axios from "axios";
+
+import axios from "../../../api/axios";
 import ImagePattern from "../../../components/ImagePattern";
 
 const ImagePatternLogin = () => {
@@ -14,14 +15,8 @@ const ImagePatternLogin = () => {
 
   const handleSubmit = async () => {
     setLoading(true);
-    const email = localStorage.getItem("homeTechMail");
     try {
-      const res = await axios.post("/api/pattern/login", {
-        imgPattern,
-        email,
-      });
-      const token = res.data.token;
-      localStorage.setItem("home-tech", token);
+      await axios.post("api/pattern/login", {imgPattern});
       toast.success(`Validation success`);
       router.push("/dashboard");
       clearArray();

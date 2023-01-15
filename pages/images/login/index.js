@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useRouter } from "next/router";
 import { toast } from "react-toastify";
-import axios from "axios";
 
+import axios from "../../../api/axios";
 import Images from "../../../components/Images";
 
 const ImageLogin = () => {
@@ -12,9 +12,8 @@ const ImageLogin = () => {
 
   const handleNext = async () => {
     setLoading(true);
-    const email = localStorage.getItem("homeTechMail");
     try {
-      await axios.post("/api/images/login", { imageString, email });
+      await axios.post("api/images/login", { imageString });
       toast.success(`verification successful`);
       router.push("/image-pattern/login");
     } catch (error) {

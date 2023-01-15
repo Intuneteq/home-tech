@@ -26,8 +26,9 @@ const Login = () => {
   const handleLogin = async () => {
     setLoading(true);
     try {
-      await axios.post("/api/login", { email, password });
+      const res = await axios.post("/api/login", { email, password });
       localStorage.setItem("homeTechMail", email);
+      localStorage.setItem('h-token', res.data.accessToken);
       toast.success("Login Successfull");
       router.push("/colors/login");
     } catch (error) {

@@ -1,4 +1,5 @@
 import bcrypt from "bcrypt";
+import createToken from "../../lib/jwt";
 
 import User from "../../models/user";
 import dbConnect from "../../lib/dbConnect";
@@ -19,7 +20,9 @@ export default async function handler(req, res) {
     const match = await bcrypt.compare(password, user.password);
     if (!match) return res.status(401).json({ message: "unauthorized user" });
 
-    res.status(200).json({ success: true, message: "user sign In successful" });
+    const accessToken = createToken(user._id);
+
+    res.status(200).json({ success: true, message: "user sign In successful", accessToken });
   } else {
     res.status(400).json({ success: false, message: "resource not found" });
   }

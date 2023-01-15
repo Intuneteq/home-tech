@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { useRouter } from "next/router";
 import { toast } from "react-toastify";
-import axios from "axios";
+
+import axios from "../../../api/axios";
 import Colors from "../../../components/colors";
 
 const LoginColor = () => {
@@ -12,14 +13,11 @@ const LoginColor = () => {
     setColorArray([]);
   }
 
-  const handleNext = async () => {
+  const handleNext = async (e) => {
+    e.preventDefault();
     setLoading(true);
-    const email = localStorage.getItem("homeTechMail");
     try {
-      await axios.post("/api/colors/login", {
-        colorCombination: colorArray,
-        email,
-      });
+      await axios.post("api/colors/login", { colorCombination: colorArray });
       toast.success(`color combination valid`);
       router.push("/images/login");
     } catch (error) {
@@ -33,7 +31,12 @@ const LoginColor = () => {
   };
 
   return (
-    <Colors loading={loading} handleNext={handleNext} colorArray={colorArray} setColorArray={setColorArray} />
+    <Colors
+      loading={loading}
+      handleNext={handleNext}
+      colorArray={colorArray}
+      setColorArray={setColorArray}
+    />
   );
 };
 

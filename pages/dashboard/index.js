@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import axios from "axios";
 
+import axios from "../../api/axios";
 import useAppProvider from "../../hooks/useAppProvider";
 
 const Dashboard = () => {
@@ -9,12 +9,9 @@ const Dashboard = () => {
   const router = useRouter();
 
   useEffect(() => {
-    const token = localStorage.getItem("home-tech");
     const getUser = async () => {
       try {
-        const res = await axios.get("/api/user", {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        const res = await axios.get("api/user");
         setFullName(res.data.data.fullName)
       } catch (error) {
         console.log(error);
