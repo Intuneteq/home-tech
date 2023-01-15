@@ -13,7 +13,7 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState('');
   const router = useRouter();
-  const { setuserId, setOtpEmail } = useAppProvider();
+  const { setOtpEmail } = useAppProvider();
   const Email_REGEX = useMemo(() => /^\S+@\S+\.\S+$/, []);
 
   useEffect(() => {

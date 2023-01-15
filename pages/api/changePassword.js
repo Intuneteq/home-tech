@@ -2,16 +2,18 @@ import bcrypt from "bcrypt";
 
 import User from "../../models/user";
 import dbConnect from "../../lib/dbConnect";
+import authentication from "../../lib/authentication";
 
 export default async function handler(req, res) {
   const { method } = req;
 
   await dbConnect();
-
-  console.log('i got here')
+  const {user, error, status, message} = await authentication(req);
+  const userId = user._id;
+ 
+  if(error) return res.status(status).json({success: false, message})
   if (method === "POST") {
-    const { userId, password } = req.body;
-    console.log('user', userId)
+    const { password } = req.body;
 
     if(!userId || !password) return res.status(422).json({success: false, message: 'incomplete payload'});
 

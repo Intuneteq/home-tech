@@ -2,9 +2,9 @@ import React, { useEffect, useState, useRef } from "react";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { HiArrowNarrowLeft } from "react-icons/hi";
-import axios from "axios";
 import { toast } from "react-toastify";
 
+import axios from "../../api/axios";
 import useAppProvider from "../../hooks/useAppProvider";
 
 const ResetPassword = () => {
@@ -14,7 +14,7 @@ const ResetPassword = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [passwordMatch, setPasswordMatch] = useState(false);
   const router = useRouter();
-  const { userId } = useAppProvider();
+  // const { userId } = useAppProvider();
 
   useEffect(() => {
     setErrMsg("");
@@ -35,8 +35,7 @@ const ResetPassword = () => {
   const handleResetPassword = async () => {
     setLoading(true);
     try {
-      console.log('user', userId, password)
-      await axios.post('/api/changePassword', {userId, password});
+      await axios.post('api/changePassword', {password});
       router.push("/colors/register");
       toast.success('password changed')
     } catch (error) {

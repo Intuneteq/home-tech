@@ -9,11 +9,12 @@ import axios from "../../api/axios";
 
 const OTPVerification = () => {
   const [otp, setOTP] = useState("");
-  const { userId, otpEmail, resetPassword, setResetPassword } = useAppProvider();
+  const { otpEmail, resetPassword, setResetPassword } = useAppProvider();
   const router = useRouter();
 
   const handleVerification = async (e) => {
     e.preventDefault();
+    
     try {
       await axios.post("api/otp/", { otp });
       toast.success("OTP verified");

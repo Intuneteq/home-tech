@@ -3,7 +3,7 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import { HiArrowNarrowLeft } from "react-icons/hi";
 import axios from "axios";
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
 
 import useAppProvider from "../../hooks/useAppProvider";
 
@@ -15,7 +15,7 @@ const ForgotPassword = () => {
   const router = useRouter();
   const emailRef = useRef();
   const { setuserId, setOtpEmail } = useAppProvider();
-  const Email_REGEX = useMemo(() => /^\S+@\S+\.\S+$/, [])
+  const Email_REGEX = useMemo(() => /^\S+@\S+\.\S+$/, []);
 
   useEffect(() => {
     setValidEmail(Email_REGEX.test(email));
@@ -32,23 +32,23 @@ const ForgotPassword = () => {
   const handleForgotPassword = async () => {
     setLoading(true);
     try {
-      const res = await axios.post('/api/forgotPassword', {email});
-    setuserId(res.data.userId);
-    setOtpEmail(email);
-    toast.success(`verify your otp`);
-    router.push("/emailLink");
+      const res = await axios.post("/api/forgotPassword", { email });
+      localStorage.setItem("h-token", res.data.accessToken);
+      setOtpEmail(email);
+      toast.success(`verify your otp`);
+      router.push("/emailLink");
     } catch (error) {
       console.log(error);
-      const errorStatus = error.response.status
+      const errorStatus = error.response.status;
       switch (errorStatus) {
         case 404:
-          setEmailErrMsg("email does not exist")
+          setEmailErrMsg("email does not exist");
           break;
-        case 500: 
-        setEmailErrMsg("No server response")
-        break;
+        case 500:
+          setEmailErrMsg("No server response");
+          break;
         default:
-          setEmailErrMsg('could not verify emaill address')
+          setEmailErrMsg("could not verify emaill address");
           break;
       }
     }

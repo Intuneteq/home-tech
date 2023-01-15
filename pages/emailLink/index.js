@@ -2,8 +2,16 @@ import React from "react";
 import { useRouter } from "next/router";
 import { HiArrowNarrowLeft } from "react-icons/hi";
 
+import useAppProvider from "../../hooks/useAppProvider";
+
 const EmailLink = () => {
     const router = useRouter();
+    const { setResetPassword } = useAppProvider();
+
+    const handleNext = () => {
+      setResetPassword(true);
+      router.push('/otp');
+    }
   return (
     <main style={{ height: "100vh" }} className="app__flex main">
       <article className="column-flex modal">
@@ -21,7 +29,7 @@ const EmailLink = () => {
           style={{  marginBottom: "16px" }}
           className="modal-btn column-flex"
         >
-          <button onClick={() => router.push('/otp')} className="primary-btn">Go to Email</button>
+          <button onClick={handleNext} className="primary-btn">Go to Email</button>
         </div>
         <div
           style={{ marginTop: "22px", marginBottom: "156px" }}

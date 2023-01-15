@@ -1,6 +1,7 @@
 import User from "../../models/user";
 import dbConnect from "../../lib/dbConnect";
 import sendOTPVerificationEmail from "../../lib/otpVerification";
+import createToken from "../../lib/jwt";
 
 export default async function handler(req, res) {
   const { method } = req;
@@ -30,10 +31,12 @@ export default async function handler(req, res) {
           return res.status(500).json({ message });
         }
 
+        const accessToken = createToken(foundUser._id);
+
         res.status(201).json({
           success: "PENDING",
           message,
-          userId: foundUser._id,
+          accessToken
         });
       } catch (error) {
         return res.status(500).json({ message: error.message });
