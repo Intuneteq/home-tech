@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useRouter } from "next/router";
 import { toast } from "react-toastify";
-import axios from "axios";
+import axios from '../../../api/axios';
 import Colors from "../../../components/colors";
 
 const RegisterColor = () => {
@@ -11,10 +11,8 @@ const RegisterColor = () => {
 
   const handleNext = async () => {
     setLoading(true);
-    const email = localStorage.getItem("homeTechMail");
     try {
-      await axios.post("/api/colors/register", {
-        email,
+      await axios.post("api/colors/register", {
         colorCombination: colorArray,
       });
       toast.success(`color combination registered`);

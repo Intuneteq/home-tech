@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { useRouter } from "next/router";
 import { toast } from "react-toastify";
-import axios from "axios";
+
+import axios from "../../../api/axios";
 import ImagePattern from "../../../components/ImagePattern";
 
 const RegisterImagePattern = () => {
@@ -11,12 +12,8 @@ const RegisterImagePattern = () => {
 
   const handleSubmit = async () => {
     setLoading(true);
-    const email = localStorage.getItem("homeTechMail");
     try {
-      await axios.post("/api/pattern/register", {
-        email,
-        imgPattern,
-      });
+      await axios.post("api/pattern/register", { imgPattern });
       toast.success(`Validation success`);
       router.push("/success");
     } catch (error) {

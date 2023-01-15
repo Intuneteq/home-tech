@@ -6,6 +6,7 @@ export const AppProvider = ({ children }) => {
   const [fullName, setFullName] = useState("");
   const [userId, setuserId] = useState("");
   const [otpEmail, setOtpEmail] = useState("");
+  const [resetPassword, setResetPassword] = useState(false);
 
   return (
     <AppContext.Provider
@@ -15,7 +16,9 @@ export const AppProvider = ({ children }) => {
         userId,
         setuserId,
         otpEmail,
-        setOtpEmail
+        setOtpEmail,
+        resetPassword,
+        setResetPassword
       }}
     >
       {children}

@@ -1,9 +1,12 @@
 import axios from 'axios';
 
-const token = localStorage.getItem('h-token');
+let token;
+if (typeof window !== 'undefined') {
+    token = localStorage.getItem('h-token');
+  }
 
 export default axios.create({
-    baseURL: 'api',
+    baseURL: '/',
     headers: {
         Authorization: `Bearer ${token}`
     }

@@ -20,10 +20,6 @@ const ImagePattern = ({ handleSubmit, imgPattern, setImgPattern, loading }) => {
     }
   };
 
-  useEffect(() => {
-    console.log('img', imgPattern)
-  }, [imgPattern]);
-
   const grid = useMemo(
     () => [
       "/1.png",

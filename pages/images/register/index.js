@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useRouter } from "next/router";
 import { toast } from "react-toastify";
-import axios from "axios";
+import axios from "../../../api/axios";
 
 import Images from "../../../components/Images";
 
@@ -10,12 +10,8 @@ const RegisterImage = () => {
   const [imageString, setImageString] = useState("");
 
   const handleNext = async () => {
-    const email = localStorage.getItem("homeTechMail");
     try {
-      await axios.post("/api/images/register", {
-        email,
-        imageString,
-      });
+      await axios.post("api/images/register", {imageString});
       toast.success(`Image upload success`);
       router.push("/image-pattern/register");
     } catch (error) {
@@ -26,7 +22,13 @@ const RegisterImage = () => {
     }
   };
 
-  return <Images handleNext={handleNext} imageString={imageString} setImageString={setImageString} />;
+  return (
+    <Images
+      handleNext={handleNext}
+      imageString={imageString}
+      setImageString={setImageString}
+    />
+  );
 };
 
 export default RegisterImage;
