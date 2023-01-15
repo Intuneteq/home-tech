@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { useRouter } from "next/router";
-import axios from "axios";
+// import axios from "axios";
 import { toast } from "react-toastify";
 import { HiArrowNarrowLeft } from "react-icons/hi";
 
 import useAppProvider from "../../hooks/useAppProvider";
+import axios from "../../api/axios";
 
 const OTPVerification = () => {
   const [otp, setOTP] = useState("");
@@ -14,7 +15,7 @@ const OTPVerification = () => {
   const handleVerification = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("/api/otp/"+userId, { otp });
+      await axios.post("/otp/", { otp });
       toast.success("OTP verified");
       router.push("/reset-password");
     } catch (error) {

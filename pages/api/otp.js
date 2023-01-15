@@ -3,19 +3,21 @@ import bcrypt from "bcrypt";
 import User from "../../models/user";
 import UserOTPVerification from "../../models/UserOTPVerification";
 import dbConnect from "../../lib/dbConnect";
+import authentication from "../../lib/authentication";
 
 export default async function handler(req, res) {
   const { method } = req;
 
   await dbConnect();
+ const {user, error, status, message} = await authentication(req);
+ const userId = user._id;
+
+ if(error) return res.status(status).json({success: false, message})
 
   if (method === "POST") {
     const { otp } = req.body;
-    // const { userId } = req.param;
-
-    console.log(req.param)
     try {
-      if (!userId || !otp)
+      if (!otp)
         return res.status(400).json({ success: false, message: "bad request" });
       const verifyRecords = await UserOTPVerification.find({ userId });
       if (verifyRecords <= 0) {
