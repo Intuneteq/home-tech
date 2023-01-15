@@ -10,7 +10,10 @@ export default async function handler(req, res) {
   await dbConnect();
 
   if (method === "POST") {
-    const { userId, otp } = req.body;
+    const { otp } = req.body;
+    // const { userId } = req.param;
+
+    console.log(req.param)
     try {
       if (!userId || !otp)
         return res.status(400).json({ success: false, message: "bad request" });

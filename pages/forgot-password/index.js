@@ -14,7 +14,7 @@ const ForgotPassword = () => {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
   const emailRef = useRef();
-  const { setuserId } = useAppProvider();
+  const { setuserId, setOtpEmail } = useAppProvider();
   const Email_REGEX = useMemo(() => /^\S+@\S+\.\S+$/, [])
 
   useEffect(() => {
@@ -34,6 +34,7 @@ const ForgotPassword = () => {
     try {
       const res = await axios.post('/api/forgotPassword', {email});
     setuserId(res.data.userId);
+    setOtpEmail(email);
     toast.success(`verify your otp`);
     router.push("/emailLink");
     } catch (error) {

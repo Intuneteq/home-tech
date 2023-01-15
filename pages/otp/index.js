@@ -2,17 +2,19 @@ import React, { useState } from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { HiArrowNarrowLeft } from "react-icons/hi";
 
 import useAppProvider from "../../hooks/useAppProvider";
-import { HiArrowNarrowLeft } from "react-icons/hi";
 
 const OTPVerification = () => {
   const [otp, setOTP] = useState("");
-  const { userId } = useAppProvider();
+  const { userId, otpEmail } = useAppProvider();
   const router = useRouter();
-  const handleVerification = async () => {
+
+  const handleVerification = async (e) => {
+    e.preventDefault();
     try {
-      const res = await axios.post("/api/otp", { userId, otp });
+      await axios.post("/api/otp/"+userId, { otp });
       toast.success("OTP verified");
       router.push("/reset-password");
     } catch (error) {
@@ -20,6 +22,18 @@ const OTPVerification = () => {
       toast.error(error.message);
     }
   };
+
+  const handleResendCode = async () => {
+    try {
+      // const { error } = await sendOTPVerificationEmail(otpEmail, userId);
+      // if(error) {
+      //   throw error;
+      // }
+    } catch(error) {
+        console.log(error)
+       }
+  }
+
   return (
     <main style={{ height: "100vh" }} className="app__flex main">
       <article className="column-flex modal">
@@ -31,7 +45,7 @@ const OTPVerification = () => {
         </h1>
         <p style={{ marginBottom: "40px" }} className="p-text-2">
           Enter the code sent to{" "}
-          <b style={{ color: "#131313" }}>salihuahmedrufai@gmail.com</b> to
+          <b style={{ color: "#131313" }}>{otpEmail}</b> to
           verify your email address
         </p>
         <div className="modal-input">
@@ -49,6 +63,7 @@ const OTPVerification = () => {
                 color: "#0076A7",
                 fontWeight: "700",
               }}
+              onClick={handleResendCode}
             >
               Resend code
             </span>

@@ -13,7 +13,7 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState('');
   const router = useRouter();
-  const { setuserId } = useAppProvider();
+  const { setuserId, setOtpEmail } = useAppProvider();
   const Email_REGEX = useMemo(() => /^\S+@\S+\.\S+$/, []);
 
   useEffect(() => {
@@ -23,13 +23,14 @@ const Register = () => {
   const handleNext = async (e) => {
     e.preventDefault();
     setLoading(true)
-    email.toLocaleLowerCase()
+    setOtpEmail(email);
     const body = { fullName, email, password };
-    localStorage.setItem('homeTechMail', email)
+    
     try {
       const res = await axios.post("/api/register", body);
-      setuserId(res.data.userId)
-      toast.success(`verify your otp`)
+      localStorage.setItem('h-token', res.data.accessToken);
+      localStorage.setItem('userId', res.data.userId);
+      toast.success(`verify your otp`);
       router.push("/otp");
     } catch (error) {
       console.log(error);
@@ -39,6 +40,8 @@ const Register = () => {
     }
     setLoading(false);
   };
+
+  
   return (
     <main style={{ height: "100vh" }} className="app__flex main">
       <article className="column-flex modal">

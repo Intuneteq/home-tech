@@ -1,13 +1,13 @@
 import bcrypt from "bcrypt";
-
 import User from "../../models/user";
 import dbConnect from "../../lib/dbConnect";
 import sendOTPVerificationEmail from "../../lib/otpVerification";
+import createToken from "../../lib/jwt";
 
 export default async function handler(req, res) {
   const { method } = req;
-
   await dbConnect();
+  
 
   if (method === "POST") {
     const { fullName, email, password } = req.body;
@@ -39,12 +39,15 @@ export default async function handler(req, res) {
       if (error) {
         await newUser.delete();
         return res.status(500).json({ message });
-      }
+      };
+
+      const accessToken = createToken(newUser._id);
 
       res.status(201).json({
         success: "PENDING",
         message,
         userId: newUser._id,
+        accessToken
       });
     } catch (error) {
       return res.status(500).json({ message: error.message });
