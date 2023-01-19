@@ -1,5 +1,6 @@
 import React, { useState, useMemo, useEffect } from "react";
 import Image from "next/image";
+import { HiArrowNarrowLeft } from "react-icons/hi";
 
 const Images = ({ handleNext, imageString, setImageString, loading }) => {
   const [active, setActive] = useState({
@@ -60,6 +61,9 @@ const Images = ({ handleNext, imageString, setImageString, loading }) => {
   return (
     <main style={{ height: "100vh" }} className="app__flex main">
       <article className="column-flex modal">
+      <div className="modal-arrow">
+          <HiArrowNarrowLeft onClick={() => router.back()} />
+        </div>
         <h1 style={{ marginBottom: "8px" }} className="head-text">
           Select Any Image Below
         </h1>

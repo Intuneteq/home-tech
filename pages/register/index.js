@@ -2,7 +2,8 @@ import React, { useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import axios from "axios";
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
+import { HiArrowNarrowLeft } from "react-icons/hi";
 
 import useAppProvider from "../../hooks/useAppProvider";
 
@@ -11,9 +12,10 @@ const Register = () => {
   const [email, setEmail] = useState("");
   const [validEmail, setValidEmail] = useState(false);
   const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState('');
+  const [loading, setLoading] = useState("");
+  const [errMsg, setErrMsg] = useState("");
   const router = useRouter();
-  const { setOtpEmail } = useAppProvider();
+  const { setOtpEmail, setuserId } = useAppProvider();
   const Email_REGEX = useMemo(() => /^\S+@\S+\.\S+$/, []);
 
   useEffect(() => {
@@ -22,29 +24,35 @@ const Register = () => {
 
   const handleNext = async (e) => {
     e.preventDefault();
-    setLoading(true)
+    setLoading(true);
     setOtpEmail(email);
     const body = { fullName, email, password };
-    
+
     try {
       const res = await axios.post("/api/register", body);
-      localStorage.setItem('h-token', res.data.accessToken);
-      localStorage.setItem('userId', res.data.userId);
-      toast.success(`verify your otp`);
+      setuserId(res.data.userId);
+      localStorage.setItem("h-token", res.data.accessToken);
+      toast.success(`Account Successfully Created`);
       router.push("/otp");
     } catch (error) {
       console.log(error);
-      error?.response?.data === undefined || error?.response?.data === null
-        ? toast.error("something went wrong")
-        : toast.error(error.response.data.message);
+      if (!error?.response?.data) {
+        setErrMsg("Account not created, Try again");
+      } else if (error?.response?.status == 500) {
+        setErrMsg("Account not created, Try again");
+      } else {
+        setErrMsg(error.response.data.message);
+      }
     }
     setLoading(false);
   };
 
-  
   return (
     <main style={{ height: "100vh" }} className="app__flex main">
       <article className="column-flex modal">
+        <div className="modal-arrow">
+          <HiArrowNarrowLeft onClick={() => router.back()} />
+        </div>
         <h1 style={{ marginBottom: "8px" }} className="head-text">
           Create an Account
         </h1>
@@ -74,7 +82,7 @@ const Register = () => {
           />
           <Image src={"/sms.svg"} width={24} height={24} alt="email" />
         </div>
-        <div className="modal-input">
+        <div className="modal-input error">
           <input
             type="password"
             placeholder="Password"
@@ -82,21 +90,28 @@ const Register = () => {
           />
           <Image src={"/eye-slash.svg"} width={24} height={24} alt="email" />
         </div>
+        <span className={errMsg ? "error-span" : "offscreen"}>{errMsg}</span>
         <div
           style={{ marginTop: "22px", marginBottom: "10px" }}
           className="modal-btn column-flex"
         >
-          <button disabled={!validEmail || !fullName || !password ? true : false} onClick={handleNext} className="primary-btn">
-            {loading ? 'Signing up...' : 'Next'}
+          <button
+            disabled={!validEmail || !fullName || !password ? true : false}
+            onClick={handleNext}
+            className="primary-btn"
+          >
+            {loading ? "Signing up..." : "Next"}
           </button>
         </div>
         <p style={{ marginBottom: "44px" }} className="p-text">
-          Already have an account{" "}
+          Already have an account?{" "}
           <span
             style={{
               color: "#0076A7",
               fontWeight: "700",
+              cursor: 'pointer'
             }}
+            onClick={() => router.push('/login')}
           >
             Sign In
           </span>

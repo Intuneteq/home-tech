@@ -3,6 +3,7 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { HiArrowNarrowLeft } from "react-icons/hi";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -28,7 +29,7 @@ const Login = () => {
     try {
       const res = await axios.post("/api/login", { email, password });
       localStorage.setItem("homeTechMail", email);
-      localStorage.setItem('h-token', res.data.accessToken);
+      localStorage.setItem("h-token", res.data.accessToken);
       toast.success("Login Successfull");
       router.push("/colors/login");
     } catch (error) {
@@ -54,6 +55,9 @@ const Login = () => {
   return (
     <main style={{ height: "100vh" }} className="app__flex main">
       <article className="column-flex modal">
+        <div className="modal-arrow">
+          <HiArrowNarrowLeft onClick={() => router.back()} />
+        </div>
         <h1 style={{ marginBottom: "8px" }} className="head-text">
           Sign In to Continue
         </h1>
@@ -121,7 +125,12 @@ const Login = () => {
               Register
             </span>
           </p>
-          <span onClick={() => router.push('/forgot-password')} className="p-text">forgot Password?</span>
+          <span
+            onClick={() => router.push("/forgot-password")}
+            className="p-text"
+          >
+            forgot Password?
+          </span>
         </div>
         <div className="modal-footer app__flex-2">
           <p>Privacy and Policy</p>

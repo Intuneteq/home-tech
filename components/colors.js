@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import { toast } from "react-toastify";
+import { HiArrowNarrowLeft } from "react-icons/hi";
 
 const Colors = ({ handleNext, colorArray, setColorArray, loading, errMsg }) => {
   const [animate, setAnimate] = useState({
@@ -13,7 +14,7 @@ const Colors = ({ handleNext, colorArray, setColorArray, loading, errMsg }) => {
     if (colorExistInArray) {
       toast.warn("you already selected this");
     } else {
-      setColorArray([...colorArray, hexCode])
+      setColorArray([...colorArray, hexCode]);
     }
   };
 
@@ -27,11 +28,14 @@ const Colors = ({ handleNext, colorArray, setColorArray, loading, errMsg }) => {
 
   const handleReset = () => {
     setColorArray([]);
-  }
+  };
 
   return (
     <main style={{ height: "100vh" }} className="app__flex main">
       <article className="modal column-flex">
+        <div className="modal-arrow">
+          <HiArrowNarrowLeft onClick={() => router.back()} />
+        </div>
         <h1 style={{ marginBottom: "8px" }} className="head-text">
           Select Your Color Combination
         </h1>
@@ -90,10 +94,24 @@ const Colors = ({ handleNext, colorArray, setColorArray, loading, errMsg }) => {
           </button>
         </div>
         <div className="modal-btn">
-          <button onClick={handleReset} disabled={colorArray.length >= 1 ? false : true} className="primary-btn">Reset</button>
+          <button
+            onClick={handleReset}
+            disabled={colorArray.length >= 1 ? false : true}
+            className="primary-btn"
+          >
+            Reset
+          </button>
         </div>
-        <span style={{ marginTop: "17px" }} className={errMsg ? "error-span" : "offscreen"}>{errMsg}</span>
-        <div style={{ marginTop: "140px" }} className="modal-footer app__flex-2">
+        <span
+          style={{ marginTop: "17px" }}
+          className={errMsg ? "error-span" : "offscreen"}
+        >
+          {errMsg}
+        </span>
+        <div
+          style={{ marginTop: "140px" }}
+          className="modal-footer app__flex-2"
+        >
           <p>Privacy and Policy</p>
           <p>FAQ</p>
         </div>

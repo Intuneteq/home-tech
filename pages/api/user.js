@@ -1,3 +1,4 @@
+import User from "../../models/user";
 import dbConnect from "../../lib/dbConnect";
 import authentication from "../../lib/authentication";
 
@@ -16,7 +17,13 @@ export default async function handler(req, res) {
     };
 
     res.status(200).json({ success: true, data: userInfo });
+  } else if(method == "DELETE") {
+    const foundUser = await User.findOne({_id: user._id}).exec();
+    if(!foundUser) return res.status(204).json({success: true, message: 'user not found'})
+    const res = await foundUser.deleteOne({_id: user._id})
+    res.status(204).json(res); 
+
   } else {
-    res.status(404).json({ success: false, message: "resource not found" });
+    res.status(400).json({ success: false, message: "resource not found" });
   }
 }

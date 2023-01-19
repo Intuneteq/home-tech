@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useMemo } from "react";
 import Image from "next/image";
 import { toast } from "react-toastify";
+import { HiArrowNarrowLeft } from "react-icons/hi";
 
 const ImagePattern = ({ handleSubmit, imgPattern, setImgPattern, loading }) => {
   const [active, setActive] = useState({
@@ -16,7 +17,7 @@ const ImagePattern = ({ handleSubmit, imgPattern, setImgPattern, loading }) => {
     if (findIndex || imgPattern.length >= 3) {
       toast.warn("invalid");
     } else {
-      setImgPattern([...imgPattern, index])
+      setImgPattern([...imgPattern, index]);
     }
   };
 
@@ -58,13 +59,16 @@ const ImagePattern = ({ handleSubmit, imgPattern, setImgPattern, loading }) => {
     }
   };
 
-  const handleReset =() => {
+  const handleReset = () => {
     setImgPattern([]);
-  }
+  };
 
   return (
     <main style={{ height: "100%" }} className="app__flex main">
       <article className="column-flex modal">
+        <div className="modal-arrow">
+          <HiArrowNarrowLeft onClick={() => router.back()} />
+        </div>
         <h1 style={{ marginBottom: "8px" }} className="head-text">
           Select Your Image Pattern
         </h1>
