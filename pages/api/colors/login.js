@@ -2,6 +2,7 @@ import User from "../../../models/user";
 import dbConnect from "../../../lib/dbConnect";
 import authentication from "../../../lib/authentication";
 import { getSession } from "../../../lib/get-session";
+import { decrypt } from "../../../lib/crypto";
 
 export default async function handler(req, res) {
   const { method } = req;
@@ -34,9 +35,13 @@ export default async function handler(req, res) {
         .status(404)
         .json({ success: false, message: `user not found` });
 
+        const decryptedPattern = await Promise.all(user.colorCombination.map(item => {
+          return decrypt(item)
+        }))
+
     const match =
       JSON.stringify(colorCombination) ===
-      JSON.stringify(user.colorCombination);
+      JSON.stringify(decryptedPattern);
     if (!match && views == 1) {
       return res
         .status(401)

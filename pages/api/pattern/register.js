@@ -1,7 +1,7 @@
 import User from "../../../models/user";
 import dbConnect from "../../../lib/dbConnect";
 import authentication from "../../../lib/authentication";
-import { decrypt } from "../../../lib/crypto";
+import { decrypt, encrypt } from "../../../lib/crypto";
 
 export default async function handler(req, res) {
     const { method } = req;
@@ -19,7 +19,11 @@ export default async function handler(req, res) {
         const foundUser = await User.findOne({_id}).exec();
         if(!foundUser) return res.status(404).json({success: false, message: 'user does not exist'}).exec();
 
-        foundUser.authImage.imageCombination = imgPattern;
+        const encryptedPattern = await Promise.all(imgPattern.map(item => {
+            return encrypt(item.toString())
+        }));
+
+        foundUser.authImage.imageCombination = encryptedPattern;
         await foundUser.save();
 
         res.status(201).json({success: true, message: 'image pattern successfully created'})

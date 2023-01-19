@@ -27,7 +27,7 @@ const UserSchema = new mongoose.Schema({
       children: [String]
     },
     imageCombination: {
-      type: [Number],
+      type: [String],
     },
   },
 });

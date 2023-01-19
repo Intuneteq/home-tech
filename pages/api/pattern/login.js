@@ -1,8 +1,7 @@
-import jsonwebtoken from "jsonwebtoken";
-
 import User from "../../../models/user";
 import dbConnect from "../../../lib/dbConnect";
 import authentication from "../../../lib/authentication";
+import { decrypt } from "../../../lib/crypto";
 
 export default async function handler(req, res) {
   const { method } = req;
@@ -26,9 +25,13 @@ export default async function handler(req, res) {
         .status(404)
         .json({ success: false, message: `user with not found` });
 
+    const decryptedPattern = await Promise.all(user.authImage.imageCombination.map(item => {
+      return parseInt(decrypt(item))
+    }))
+
     const match =
       JSON.stringify(imgPattern) ===
-      JSON.stringify(user.authImage.imageCombination);
+      JSON.stringify(decryptedPattern);
     if (!match)
       return res
         .status(401)

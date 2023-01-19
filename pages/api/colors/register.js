@@ -1,6 +1,7 @@
 import User from "../../../models/user";
 import dbConnect from "../../../lib/dbConnect";
 import authentication from "../../../lib/authentication";
+import { encrypt } from "../../../lib/crypto";
 
 export default async function handler(req, res) {
   const { method } = req;
@@ -28,7 +29,11 @@ export default async function handler(req, res) {
         .status(404)
         .json({ success: false, message: `user not found` });
 
-    foundUser.colorCombination = colorCombination;
+        const encryptedPattern = await Promise.all(colorCombination.map(item => {
+          return encrypt(item)
+      }));
+
+    foundUser.colorCombination = encryptedPattern;
     await foundUser.save();
 
     res.status(201).json({
