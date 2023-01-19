@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { useRouter } from "next/router";
-// import axios from "axios";
 import { toast } from "react-toastify";
 import { HiArrowNarrowLeft } from "react-icons/hi";
 
 import useAppProvider from "../../hooks/useAppProvider";
+import sendOTPVerificationEmail from '../../lib/otpVerification';
 import axios from "../../api/axios";
 
 const OTPVerification = () => {
@@ -32,10 +32,10 @@ const OTPVerification = () => {
 
   const handleResendCode = async () => {
     try {
-      // const { error } = await sendOTPVerificationEmail(otpEmail, userId);
-      // if(error) {
-      //   throw error;
-      // }
+      const { error } = await sendOTPVerificationEmail(otpEmail, userId);
+      if(error) {
+        throw Error(error);
+      }
     } catch(error) {
         console.log(error)
        }
