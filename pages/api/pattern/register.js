@@ -1,6 +1,7 @@
 import User from "../../../models/user";
 import dbConnect from "../../../lib/dbConnect";
 import authentication from "../../../lib/authentication";
+import { decrypt } from "../../../lib/crypto";
 
 export default async function handler(req, res) {
     const { method } = req;
@@ -29,7 +30,11 @@ export default async function handler(req, res) {
 
         const userBrokenImages = foundUser.authImage.imageObject.children
 
-        res.status(200).json({success: true, data: userBrokenImages})
+        const decryptedUserBrokenImages = await Promise.all(userBrokenImages.map(item => {
+            return decrypt(item);
+        }));
+
+        res.status(200).json({success: true, data: decryptedUserBrokenImages})
     } else {
         res.status(404).json({ success: false, message: "resource not found" });
     }

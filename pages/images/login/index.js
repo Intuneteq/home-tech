@@ -7,11 +7,12 @@ import Images from "../../../components/Images";
 
 const ImageLogin = () => {
   const router = useRouter();
-  const [imageString, setImageString] = useState("");
+  const [imageObject, setImageObject] = useState({});
   const [loading, setLoading] = useState(false);
 
   const handleNext = async () => {
     setLoading(true);
+    const imageString = imageObject.src
     try {
       await axios.post("api/images/login", { imageString });
       toast.success(`verification successful`);
@@ -28,9 +29,9 @@ const ImageLogin = () => {
   return (
     <Images
       handleNext={handleNext}
-      setImageString={setImageString}
       loading={loading}
-      imageString={imageString}
+      imageObject={imageObject}
+      setImageObject={setImageObject}
     />
   );
 };

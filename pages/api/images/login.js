@@ -1,14 +1,15 @@
 import User from "../../../models/user";
 import dbConnect from "../../../lib/dbConnect";
 import authentication from "../../../lib/authentication";
+import { decrypt } from "../../../lib/crypto";
 
 export default async function handler(req, res) {
   const { method } = req;
   await dbConnect();
-  const {user, error, status, message} = await authentication(req);
+  const { user, error, status, message } = await authentication(req);
   const _id = user._id;
 
-  if(error) return res.status(status).json({success: false, message})
+  if (error) return res.status(status).json({ success: false, message });
 
   if (method === "POST") {
     const { imageString } = req.body;
@@ -24,7 +25,10 @@ export default async function handler(req, res) {
         .status(404)
         .json({ success: false, message: `user not found` });
 
-    const match = user.authImage.imageString === imageString;
+    const userImage = user.authImage.imageObject.src;
+    const decryptedUserImage = decrypt(userImage);
+
+    const match = decryptedUserImage === imageString;
     if (!match)
       return res
         .status(401)
