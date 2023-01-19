@@ -20,8 +20,11 @@ const UserSchema = new mongoose.Schema({
   },
   colorCombination: [String],
   authImage: {
-    imageString: {
-      type: String,
+    imageObject: {
+      src: {
+        type: String
+      },
+      children: [String]
     },
     imageCombination: {
       type: [Number],

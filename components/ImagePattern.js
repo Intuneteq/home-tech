@@ -2,8 +2,10 @@ import React, { useState, useEffect, useMemo } from "react";
 import Image from "next/image";
 import { toast } from "react-toastify";
 import { HiArrowNarrowLeft } from "react-icons/hi";
+import axios from "../api/axios";
 
 const ImagePattern = ({ handleSubmit, imgPattern, setImgPattern, loading }) => {
+  const [grid, setGrid] = useState([]);
   const [active, setActive] = useState({
     activeObject: null,
     objects: [],
@@ -21,31 +23,43 @@ const ImagePattern = ({ handleSubmit, imgPattern, setImgPattern, loading }) => {
     }
   };
 
-  const grid = useMemo(
-    () => [
-      "/1.png",
-      "/2.png",
-      "/3.png",
-      "/4.png",
-      "/5.png",
-      "/6.png",
-      "/7.png",
-      "/8.png",
-      "/9.png",
-      "/10.png",
-      "/11.png",
-      "/12.png",
-      "/13.png",
-      "/14.png",
-      "/15.png",
-      "/16.png",
-      "/17.png",
-      "/18.png",
-      "/19.png",
-      "/20.png",
-    ],
-    []
-  );
+  useEffect(() => {
+    const getImages = async () => {
+      try {
+        const res = await axios.get('/api/pattern/register')
+        console.log(res)
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    getImages();
+  }, []);
+
+  // const grid = useMemo(
+  //   () => [
+  //     "/1.png",
+  //     "/2.png",
+  //     "/3.png",
+  //     "/4.png",
+  //     "/5.png",
+  //     "/6.png",
+  //     "/7.png",
+  //     "/8.png",
+  //     "/9.png",
+  //     "/10.png",
+  //     "/11.png",
+  //     "/12.png",
+  //     "/13.png",
+  //     "/14.png",
+  //     "/15.png",
+  //     "/16.png",
+  //     "/17.png",
+  //     "/18.png",
+  //     "/19.png",
+  //     "/20.png",
+  //   ],
+  //   []
+  // );
 
   useEffect(() => {
     setActive((prev) => ({ ...prev, objects: grid }));

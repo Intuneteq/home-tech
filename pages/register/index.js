@@ -25,9 +25,9 @@ const Register = () => {
     setValidEmail(Email_REGEX.test(email));
   }, [email, Email_REGEX]);
 
-  useEffect(() => {
-    emailRef.current.focus();
-  }, []);
+  // useEffect(() => {
+  //   emailRef.current.focus();
+  // }, []);
 
   const handleNext = async (e) => {
     e.preventDefault();

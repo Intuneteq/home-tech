@@ -7,11 +7,11 @@ import Images from "../../../components/Images";
 
 const RegisterImage = () => {
   const router = useRouter();
-  const [imageString, setImageString] = useState("");
+  const [imageObject, setImageObject] = useState({});
 
   const handleNext = async () => {
     try {
-      await axios.post("api/images/register", {imageString});
+      await axios.post("api/images/register", {imageObject});
       toast.success(`Image upload success`);
       router.push("/image-pattern/register");
     } catch (error) {
@@ -25,8 +25,8 @@ const RegisterImage = () => {
   return (
     <Images
       handleNext={handleNext}
-      imageString={imageString}
-      setImageString={setImageString}
+      imageObject={imageObject}
+      setImageObject={setImageObject}
     />
   );
 };

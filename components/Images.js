@@ -2,52 +2,21 @@ import React, { useState, useMemo, useEffect } from "react";
 import Image from "next/image";
 import { HiArrowNarrowLeft } from "react-icons/hi";
 
-const Images = ({ handleNext, imageString, setImageString, loading }) => {
+import myImages from '../data/Images'
+
+const Images = ({ handleNext, imageObject, setImageObject, loading }) => {
   const [active, setActive] = useState({
     activeObject: null,
     objects: [],
   });
 
-  const myImages = useMemo(
-    () => [
-      {
-        src: "https://res.cloudinary.com/intuneteq/image/upload/v1672735827/home-tech/wolf_rbnaha.png",
-      },
-      {
-        src: "https://res.cloudinary.com/intuneteq/image/upload/v1672735796/home-tech/car_wed6bw.png",
-      },
-      {
-        src: "https://res.cloudinary.com/intuneteq/image/upload/v1672735842/home-tech/bookshelf_mwy0j2.png",
-      },
-      {
-        src: "https://res.cloudinary.com/intuneteq/image/upload/v1672735846/home-tech/soccer_bfrfmx.png",
-      },
-      {
-        src: "https://res.cloudinary.com/intuneteq/image/upload/v1672735809/home-tech/bird_xbkpvz.png",
-      },
-      {
-        src: "https://res.cloudinary.com/intuneteq/image/upload/v1672735804/home-tech/space_hligja.png",
-      },
-      {
-        src: "https://res.cloudinary.com/intuneteq/image/upload/v1672735821/home-tech/coding_ozx1b0.png",
-      },
-      {
-        src: "https://res.cloudinary.com/intuneteq/image/upload/v1672735855/home-tech/view_xgti8w.png",
-      },
-      {
-        src: "https://res.cloudinary.com/intuneteq/image/upload/v1672735854/home-tech/work_rthnax.png",
-      },
-    ],
-    []
-  );
-
   useEffect(() => {
     setActive((prev) => ({ ...prev, objects: myImages }));
-  }, [myImages]);
+  }, []);
 
   const toggleActive = (item, i) => {
     setActive({ ...active, activeObject: active.objects[i] });
-    setImageString(item);
+    setImageObject(item);
   };
 
   const toggleActiveClassName = (i) => {
@@ -90,7 +59,7 @@ const Images = ({ handleNext, imageString, setImageString, loading }) => {
               width={154}
               height={110}
               alt="im"
-              onClick={() => toggleActive(item.src, index)}
+              onClick={() => toggleActive(item, index)}
             />
           ))}
         </div>
@@ -99,7 +68,7 @@ const Images = ({ handleNext, imageString, setImageString, loading }) => {
           className="modal-btn column-flex"
         >
           <button
-            disabled={imageString ? false : true}
+            disabled={imageObject.src ? false : true}
             onClick={handleNext}
             className="primary-btn"
           >

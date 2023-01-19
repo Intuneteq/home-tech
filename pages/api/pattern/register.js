@@ -23,6 +23,13 @@ export default async function handler(req, res) {
 
         res.status(201).json({success: true, message: 'image pattern successfully created'})
 
+    } else if (method === 'GET') {
+        const foundUser = await User.findOne({ _id }).exec();
+        if(!foundUser) return res.status(404).json({success: false, message: 'user not found'})
+
+        const userBrokenImages = foundUser.authImage.imageObject.children
+
+        res.status(200).json({success: true, data: userBrokenImages})
     } else {
         res.status(404).json({ success: false, message: "resource not found" });
     }
