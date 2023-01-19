@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState, useRef } from "react";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import axios from "axios";
@@ -14,6 +14,9 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState("");
   const [errMsg, setErrMsg] = useState("");
+  const [emailErrMsg, setEmailErrMsg] = useState("");
+  const [togglePassword, setTogglePassword] = useState(false);
+  const emailRef = useRef();
   const router = useRouter();
   const { setOtpEmail, setuserId } = useAppProvider();
   const Email_REGEX = useMemo(() => /^\S+@\S+\.\S+$/, []);
@@ -21,6 +24,10 @@ const Register = () => {
   useEffect(() => {
     setValidEmail(Email_REGEX.test(email));
   }, [email, Email_REGEX]);
+
+  useEffect(() => {
+    emailRef.current.focus();
+  }, []);
 
   const handleNext = async (e) => {
     e.preventDefault();
@@ -40,6 +47,8 @@ const Register = () => {
         setErrMsg("Account not created, Try again");
       } else if (error?.response?.status == 500) {
         setErrMsg("Account not created, Try again");
+      } else if (error?.response?.status == 400) {
+        setEmailErrMsg("Email Address already exist");
       } else {
         setErrMsg(error.response.data.message);
       }
@@ -74,21 +83,33 @@ const Register = () => {
           />
           <Image src={"/fullname.svg"} width={24} height={24} alt="fullname" />
         </div>
-        <div className="modal-input">
+        <div className={emailErrMsg ? "modal-input error" : "modal-input"}>
           <input
+            ref={emailRef}
             type="email"
             placeholder="Email address"
             onChange={(e) => setEmail(e.target.value.toLowerCase())}
+            className={"email-error input-error"}
           />
           <Image src={"/sms.svg"} width={24} height={24} alt="email" />
         </div>
+        <span className={emailErrMsg ? "error-span" : "offscreen"}>
+          {emailErrMsg}
+        </span>
         <div className="modal-input error">
           <input
-            type="password"
+            type={togglePassword ? "text" : "password"}
             placeholder="Password"
             onChange={(e) => setPassword(e.target.value)}
           />
-          <Image src={"/eye-slash.svg"} width={24} height={24} alt="email" />
+          <Image
+            style={{ cursor: "pointer" }}
+            onClick={() => setTogglePassword(!togglePassword)}
+            src={togglePassword ? "/eye.svg" : "/eye-slash.svg"}
+            width={24}
+            height={24}
+            alt="password"
+          />
         </div>
         <span className={errMsg ? "error-span" : "offscreen"}>{errMsg}</span>
         <div
@@ -109,9 +130,9 @@ const Register = () => {
             style={{
               color: "#0076A7",
               fontWeight: "700",
-              cursor: 'pointer'
+              cursor: "pointer",
             }}
-            onClick={() => router.push('/login')}
+            onClick={() => router.push("/login")}
           >
             Sign In
           </span>

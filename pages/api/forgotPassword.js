@@ -21,6 +21,8 @@ export default async function handler(req, res) {
           .status(404)
           .json({ sucess: false, message: "email does not exist" });
 
+          console.log('i got here')
+
       try {
         const { error, message } = await sendOTPVerificationEmail(
           email,

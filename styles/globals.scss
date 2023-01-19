@@ -171,6 +171,10 @@ body {
   &:hover {
     color: #0076a7;
   }
+  &:disabled,
+  &[disabled] {
+    color: #a3bcc7;
+  }
 }
 
 .test {
@@ -308,6 +312,10 @@ body {
       padding-left: 20px;
       padding-right: 10%;
       outline: none;
+
+      &:focus {
+        outline: 2px solid var(--primary-color);
+      }
     }
 
     img {

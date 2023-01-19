@@ -92,8 +92,9 @@ const Login = () => {
             className={errMsg ? "input-error" : null}
           />
           <Image
+            style={{ cursor: "pointer" }}
             onClick={() => setShowPassword(!showPassword)}
-            src={showPassword ? "/showpassword.png" : "/eye-slash.svg"}
+            src={showPassword ? "/eye.svg" : "/eye-slash.svg"}
             width={24}
             height={24}
             alt="email"

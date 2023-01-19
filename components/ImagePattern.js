@@ -110,7 +110,7 @@ const ImagePattern = ({ handleSubmit, imgPattern, setImgPattern, loading }) => {
           <button
             disabled={imgPattern.length >= 1 ? false : true}
             onClick={handleReset}
-            className="primary-btn"
+            className="tertiary-btn"
           >
             Reset
           </button>

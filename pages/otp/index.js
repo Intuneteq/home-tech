@@ -17,7 +17,7 @@ const OTPVerification = () => {
 
     try {
       await axios.post("api/otp/", { otp });
-      toast.success("OTP verified");
+      toast.success("Account Verified Successfully");
       if (resetPassword) {
         router.push("/reset-password");
         setResetPassword(false);

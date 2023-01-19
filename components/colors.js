@@ -97,7 +97,7 @@ const Colors = ({ handleNext, colorArray, setColorArray, loading, errMsg }) => {
           <button
             onClick={handleReset}
             disabled={colorArray.length >= 1 ? false : true}
-            className="primary-btn"
+            className="tertiary-btn"
           >
             Reset
           </button>
