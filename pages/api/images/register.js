@@ -1,9 +1,17 @@
+import NextCors from 'nextjs-cors';
 import User from "../../../models/user";
 import dbConnect from "../../../lib/dbConnect";
 
 export default async function handler(req, res) {
     const { method } = req;
+    await NextCors(req, res, {
+        // Options
+        methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
+        origin: '*',
+        optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+     });
     await dbConnect();
+
 
     if(method === 'POST') {
         const { imageString, email } = req.body;

@@ -2,10 +2,17 @@ import jsonwebtoken from "jsonwebtoken";
 
 import User from "../../../models/user";
 import dbConnect from "../../../lib/dbConnect";
+import NextCors from 'nextjs-cors';
 
 export default async function handler(req, res) {
   const { method } = req;
-  await dbConnect();
+  await NextCors(req, res, {
+    // Options
+    methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
+    origin: '*',
+    optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+ });
+await dbConnect();
 
   if (method === "POST") {
     const { imgPattern, email } = req.body;
