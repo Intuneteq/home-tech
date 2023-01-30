@@ -38,7 +38,7 @@ const Register = () => {
     try {
       const res = await axios.post("/api/register", body);
       setuserId(res.data.userId);
-      localStorage.setItem("h-token", res.data.accessToken);
+      localStorage.setItem("h-token", res.data.registerToken);
       toast.success(`Account Successfully Created`);
       router.push("/otp");
     } catch (error) {

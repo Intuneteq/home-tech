@@ -2,7 +2,7 @@ import bcrypt from "bcrypt";
 import User from "../../models/user";
 import dbConnect from "../../lib/dbConnect";
 import sendOTPVerificationEmail from "../../lib/otpVerification";
-import createToken from "../../lib/jwt";
+import {createRegisterToken} from "../../lib/jwt";
 
 export default async function handler(req, res) {
   const { method } = req;
@@ -37,17 +37,18 @@ export default async function handler(req, res) {
       );
 
       if (error) {
+        console.log(error)
         await newUser.delete();
-        return res.status(500).json({ message });
+        return res.status(500).json({ message: 'server could not generate otp' });
       };
 
-      const accessToken = createToken(newUser._id);
+      const registerToken = createRegisterToken(newUser._id);
 
       res.status(201).json({
         success: "PENDING",
         message,
         userId: newUser._id,
-        accessToken
+        registerToken
       });
     } catch (error) {
       return res.status(500).json({ message: error.message });

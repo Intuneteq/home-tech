@@ -4,15 +4,21 @@ import User from "../../models/user";
 import UserOTPVerification from "../../models/UserOTPVerification";
 import dbConnect from "../../lib/dbConnect";
 import authentication from "../../lib/authentication";
+import { createRegisterToken } from "../../lib/jwt";
 
 export default async function handler(req, res) {
   const { method } = req;
 
   await dbConnect();
  const {user, error, status, message} = await authentication(req);
- const userId = user._id;
 
- if(error) return res.status(status).json({success: false, message})
+ if(error){
+  console.log(error)
+  await User.deleteMany({email: req.body.email})
+  return res.status(status).json({success: false, message})
+ } 
+
+ const userId = user._id;
 
   if (method === "POST") {
     const { otp } = req.body;
@@ -44,9 +50,11 @@ export default async function handler(req, res) {
           } else {
             await User.updateOne({ _id: userId }, { verified: true });
             await UserOTPVerification.deleteMany({ userId: userId });
+            const registerToken = createRegisterToken(userId);
             res.status(200).json({
               success: true,
               status: "VERIFIEID",
+              registerToken,
               message: "user email verified successfully",
             });
           }

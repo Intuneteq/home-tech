@@ -16,7 +16,8 @@ const OTPVerification = () => {
     e.preventDefault();
 
     try {
-      await axios.post("api/otp/", { otp });
+      const res = await axios.post("api/otp/", { otp, email: otpEmail });
+      localStorage.setItem("h-token", res.data.registerToken);
       toast.success("Account Verified Successfully");
       if (resetPassword) {
         router.push("/reset-password");
@@ -27,6 +28,7 @@ const OTPVerification = () => {
     } catch (error) {
       console.log(error);
       toast.error(error.message);
+      router.push('/register')
     }
   };
 
