@@ -1,3 +1,4 @@
+import { setCookie, deleteCookie } from "cookies-next";
 import User from "../../../models/user";
 import dbConnect from "../../../lib/dbConnect";
 import authentication from "../../../lib/authentication";
@@ -6,10 +7,10 @@ import { decrypt } from "../../../lib/crypto";
 export default async function handler(req, res) {
   const { method } = req;
   await dbConnect();
-  const {user, error, status, message} = await authentication(req);
+  const { user, error, status, message } = await authentication(req);
   const _id = user._id;
 
-  if(error) return res.status(status).json({success: false, message})
+  if (error) return res.status(status).json({ success: false, message });
 
   if (method === "POST") {
     const { imgPattern } = req.body;
@@ -25,17 +26,21 @@ export default async function handler(req, res) {
         .status(404)
         .json({ success: false, message: `user with not found` });
 
-    const decryptedPattern = await Promise.all(user.authImage.imageCombination.map(item => {
-      return parseInt(decrypt(item))
-    }))
+    const decryptedPattern = await Promise.all(
+      user.authImage.imageCombination.map((item) => {
+        return parseInt(decrypt(item));
+      })
+    );
 
     const match =
-      JSON.stringify(imgPattern) ===
-      JSON.stringify(decryptedPattern);
+      JSON.stringify(imgPattern) === JSON.stringify(decryptedPattern);
     if (!match)
       return res
         .status(401)
         .json({ success: false, message: "incorrect combination" });
+
+    deleteCookie("image_key", { req, res });
+    setCookie("user_hometech", "home tech key", { req, res, maxAge: 60 * 60 });
 
     res.status(200).json({ success: true });
   } else {

@@ -1,5 +1,6 @@
 import bcrypt from "bcrypt";
-import createToken from "../../lib/jwt";
+import { setCookie } from "cookies-next";
+import { createToken } from "../../lib/jwt";
 
 import User from "../../models/user";
 import dbConnect from "../../lib/dbConnect";
@@ -18,11 +19,20 @@ export default async function handler(req, res) {
     if (!user) return res.status(404).json({ message: "user not found" });
 
     const match = await bcrypt.compare(password, user.password);
-    if (!match) return res.status(401).json({ message: "unauthorized user" });
+    if (!match) {
+      return res.status(401).json({ message: "unauthorized user" });
+    } else {
+      const accessToken = createToken(user._id);
 
-    const accessToken = createToken(user._id);
+      setCookie("form_key", accessToken, { req, res, maxAge: 60 * 60 });
+      // deleteCookie('form_key', { req, res });
 
-    res.status(200).json({ success: true, message: "user sign In successful", accessToken });
+      res.status(200).json({
+        success: true,
+        message: "user sign In successful",
+        accessToken,
+      });
+    }
   } else {
     res.status(400).json({ success: false, message: "resource not found" });
   }

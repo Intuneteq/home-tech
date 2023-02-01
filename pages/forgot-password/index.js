@@ -32,7 +32,6 @@ const ForgotPassword = () => {
   const handleForgotPassword = async () => {
     setLoading(true);
     try {
-      console.log(email)
       const res = await axios.post("/api/forgotPassword", { email });
       localStorage.setItem("h-token", res.data.accessToken);
       setOtpEmail(email);

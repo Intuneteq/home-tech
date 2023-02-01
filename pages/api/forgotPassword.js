@@ -1,7 +1,7 @@
 import User from "../../models/user";
 import dbConnect from "../../lib/dbConnect";
 import sendOTPVerificationEmail from "../../lib/otpVerification";
-import createToken from "../../lib/jwt";
+import { createToken } from "../../lib/jwt";
 
 export default async function handler(req, res) {
   const { method } = req;
@@ -21,8 +21,6 @@ export default async function handler(req, res) {
           .status(404)
           .json({ sucess: false, message: "email does not exist" });
 
-          console.log('i got here')
-
       try {
         const { error, message } = await sendOTPVerificationEmail(
           email,
@@ -30,6 +28,7 @@ export default async function handler(req, res) {
         );
 
         if (error) {
+          console.log(error);
           return res.status(500).json({ message });
         }
 
@@ -38,7 +37,7 @@ export default async function handler(req, res) {
         res.status(201).json({
           success: "PENDING",
           message,
-          accessToken
+          accessToken,
         });
       } catch (error) {
         return res.status(500).json({ message: error.message });

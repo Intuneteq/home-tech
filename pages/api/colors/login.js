@@ -1,3 +1,4 @@
+import { setCookie, deleteCookie } from "cookies-next";
 import User from "../../../models/user";
 import dbConnect from "../../../lib/dbConnect";
 import authentication from "../../../lib/authentication";
@@ -87,6 +88,8 @@ export default async function handler(req, res) {
       }
     }
 
+    deleteCookie('form_key', { req, res });
+    setCookie("color_key", 'color key', { req, res, maxAge: 60 * 60 });
     res.status(200).json({ success: true });
   } else {
     res.status(404).json({ success: false, message: "resource not found" });

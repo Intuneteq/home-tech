@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import Image from "next/image";
+import { useRouter } from "next/router";
 import { toast } from "react-toastify";
 import { HiArrowNarrowLeft } from "react-icons/hi";
 
 const Colors = ({ handleNext, colorArray, setColorArray, loading, errMsg }) => {
+  const router = useRouter()
   const [animate, setAnimate] = useState({
     activeColor: null,
   });

@@ -1,10 +1,12 @@
 import React, { useState, useMemo, useEffect } from "react";
 import Image from "next/image";
+import { useRouter } from "next/router";
 import { HiArrowNarrowLeft } from "react-icons/hi";
 
-import myImages from '../data/Images'
+import myImages from "../data/Images";
 
 const Images = ({ handleNext, imageObject, setImageObject, loading }) => {
+  const router = useRouter();
   const [active, setActive] = useState({
     activeObject: null,
     objects: [],
@@ -30,7 +32,7 @@ const Images = ({ handleNext, imageObject, setImageObject, loading }) => {
   return (
     <main style={{ height: "100vh" }} className="app__flex main">
       <article className="column-flex modal">
-      <div className="modal-arrow">
+        <div className="modal-arrow">
           <HiArrowNarrowLeft onClick={() => router.back()} />
         </div>
         <h1 style={{ marginBottom: "8px" }} className="head-text">

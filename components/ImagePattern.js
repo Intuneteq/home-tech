@@ -1,11 +1,13 @@
 import React, { useState, useEffect, useMemo } from "react";
 import Image from "next/image";
+import { useRouter } from "next/router";
 import { toast } from "react-toastify";
 import { HiArrowNarrowLeft } from "react-icons/hi";
 import axiosCall from "../api/axios";
 import axios from "axios";
 
 const ImagePattern = ({ handleSubmit, imgPattern, setImgPattern, loading }) => {
+  const router = useRouter()
   const [grid, setGrid] = useState([]);
   const [active, setActive] = useState({
     activeObject: null,
