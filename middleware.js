@@ -36,10 +36,8 @@ export default async function middleware(req) {
 
   if (url.includes("image-pattern/login")) {
     if (userCookie) {
-      console.log("i am here");
       return NextResponse.redirect(new URL("/dashboard", url));
     } else if (imageCookie === undefined) {
-      console.log("i am here2");
       return NextResponse.redirect(new URL("/images/login", url));
     }
   }

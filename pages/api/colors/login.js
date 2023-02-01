@@ -36,29 +36,26 @@ export default async function handler(req, res) {
         .status(404)
         .json({ success: false, message: `user not found` });
 
-        const decryptedPattern = await Promise.all(user.colorCombination.map(item => {
-          return decrypt(item)
-        }))
+    const decryptedPattern = await Promise.all(
+      user.colorCombination.map((item) => {
+        return decrypt(item);
+      })
+    );
 
     const match =
-      JSON.stringify(colorCombination) ===
-      JSON.stringify(decryptedPattern);
+      JSON.stringify(colorCombination) === JSON.stringify(decryptedPattern);
     if (!match && views == 1) {
-      return res
-        .status(401)
-        .json({
-          success: false,
-          message: "incorrect combination, you have two attempts left",
-          views,
-        });
+      return res.status(401).json({
+        success: false,
+        message: "incorrect combination, you have two attempts left",
+        views,
+      });
     } else if (!match && views == 2) {
-      return res
-        .status(401)
-        .json({
-          success: false,
-          message: "incorrect combination, you have one attempt left",
-          views,
-        });
+      return res.status(401).json({
+        success: false,
+        message: "incorrect combination, you have one attempt left",
+        views,
+      });
     } else if (!match && views >= 3) {
       const date = new Date();
       function addMins(numOfMins) {
@@ -68,28 +65,24 @@ export default async function handler(req, res) {
       }
       const after10Mins = addMins(10);
       if (after10Mins < date) {
-        return res
-          .status(401)
-          .json({
-            success: false,
-            message:
-              "incorrect combination, you have no more attempts left, try again in 10 mins",
-            views,
-          });
+        return res.status(401).json({
+          success: false,
+          message:
+            "incorrect combination, you have no more attempts left, try again in 10 mins",
+          views,
+        });
       } else {
         session.views = 0;
-        return res
-          .status(401)
-          .json({
-            success: false,
-            message: "incorrect combination, you have two attempts left",
-            views,
-          });
+        return res.status(401).json({
+          success: false,
+          message: "incorrect combination, you have two attempts left",
+          views,
+        });
       }
     }
 
-    deleteCookie('form_key', { req, res });
-    setCookie("color_key", 'color key', { req, res, maxAge: 60 * 60 });
+    deleteCookie("form_key", { req, res });
+    setCookie("color_key", "color key", { req, res, maxAge: 60 * 60 });
     res.status(200).json({ success: true });
   } else {
     res.status(404).json({ success: false, message: "resource not found" });

@@ -3,6 +3,7 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 
 import useAppProvider from "../hooks/useAppProvider";
+import { deleteCookie } from 'cookies-next';
 
 const Navbar = () => {
   const { fullName, setFullName } = useAppProvider();
@@ -11,6 +12,7 @@ const Navbar = () => {
   const handleLogOut = () => {
     localStorage.clear();
     setFullName("");
+    deleteCookie('user_hometech')
     router.push("/");
   };
 
