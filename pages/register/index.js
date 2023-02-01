@@ -34,11 +34,13 @@ const Register = () => {
     setLoading(true);
     setOtpEmail(email);
     const body = { fullName, email, password };
+    console.log('this email', email)
 
     try {
       const res = await axios.post("/api/register", body);
       setuserId(res.data.userId);
       localStorage.setItem("h-token", res.data.registerToken);
+      localStorage.setItem("h-email", email);
       toast.success(`Account Successfully Created`);
       router.push("/otp");
     } catch (error) {

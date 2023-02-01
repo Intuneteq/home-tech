@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import { useRouter } from "next/router";
 import { toast } from "react-toastify";
-import axios from '../../../api/axios';
+import axios from "../../../api/axios";
 import Colors from "../../../components/colors";
+import useAppProvider from "../../../hooks/useAppProvider";
 
 const RegisterColor = () => {
   const [loading, setLoading] = useState(false);
   const [colorArray, setColorArray] = useState([]);
+  const { getUserEmail } = useAppProvider();
   const router = useRouter();
 
   const handleNext = async () => {
@@ -14,6 +16,7 @@ const RegisterColor = () => {
     try {
       await axios.post("api/colors/register", {
         colorCombination: colorArray,
+        email: getUserEmail(),
       });
       toast.success(`color combination registered`);
       router.push("/images/register");
@@ -26,7 +29,14 @@ const RegisterColor = () => {
     setLoading(false);
   };
 
-  return <Colors loading={loading} handleNext={handleNext} colorArray={colorArray} setColorArray={setColorArray} />;
+  return (
+    <Colors
+      loading={loading}
+      handleNext={handleNext}
+      colorArray={colorArray}
+      setColorArray={setColorArray}
+    />
+  );
 };
 
 export default RegisterColor;

@@ -4,14 +4,16 @@ import { toast } from "react-toastify";
 import axios from "../../../api/axios";
 
 import Images from "../../../components/Images";
+import useAppProvider from "../../../hooks/useAppProvider";
 
 const RegisterImage = () => {
+  const { getUserEmail } = useAppProvider();
   const router = useRouter();
   const [imageObject, setImageObject] = useState({});
 
   const handleNext = async () => {
     try {
-      await axios.post("api/images/register", {imageObject});
+      await axios.post("api/images/register", {imageObject, email: getUserEmail() });
       toast.success(`Image upload success`);
       router.push("/image-pattern/register");
     } catch (error) {

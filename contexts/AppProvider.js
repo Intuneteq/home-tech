@@ -8,6 +8,14 @@ export const AppProvider = ({ children }) => {
   const [otpEmail, setOtpEmail] = useState("");
   const [resetPassword, setResetPassword] = useState(false);
 
+  const getUserEmail = function () {
+    let email;
+    if (typeof window !== "undefined") {
+      email = localStorage.getItem("h-email");
+    }
+    return email
+  };
+
   return (
     <AppContext.Provider
       value={{
@@ -18,7 +26,8 @@ export const AppProvider = ({ children }) => {
         otpEmail,
         setOtpEmail,
         resetPassword,
-        setResetPassword
+        setResetPassword,
+        getUserEmail
       }}
     >
       {children}
