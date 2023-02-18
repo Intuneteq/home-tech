@@ -36,6 +36,8 @@ export default async function handler(req, res) {
         newUser._id
       );
 
+      // console.log(error)
+
       if (error) {
         console.log(error)
         await newUser.delete();
