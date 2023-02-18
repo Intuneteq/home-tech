@@ -25,17 +25,7 @@ const LoginColor = () => {
       console.log(error);
       clearArray();
       if(error?.response?.data?.views) {
-        switch (error?.response?.data?.views) {
-          case 1:
-            setErrMsg("Sorry, you have selected a wrong color pattern, you have two attempts left");
-            break;
-          case 2:
-            setErrMsg("Sorry, you have selected a wrong color pattern, you have one attempt left");
-            break;
-          default:
-            setErrMsg("Sorry, you have entered a wrong color pattern, try again in 10 mins");
-            break;
-        }
+        setErrMsg(error?.response?.data?.message);
       } else {
         !error?.response?.data
           ? toast.error("something went wrong")

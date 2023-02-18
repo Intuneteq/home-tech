@@ -9,13 +9,38 @@ export default async function handler(req, res) {
   const { method } = req;
   await dbConnect();
 
-  const { user, error, status, message } = await authentication(req);
+  //authenticate user
+  const { user, error, status, message } = await authentication(req); 
+  if (error) return res.status(status).json({ success: false, message });
   const _id = user._id;
 
-  if (error) return res.status(status).json({ success: false, message });
+  //Assign session view
   const session = await getSession(req, res);
   session.views = session.views ? session.views + 1 : 1;
-  const views = session.views;
+
+  //Check Login attempts
+  if (session.views > 3) {
+    const date = new Date();
+    const elapse = new Date(session.elapse);
+    const after10Mins = new Date(elapse.getTime() + 10 * 60000);
+    const timeLeft = Math.round((after10Mins - date) / 60000);
+
+    //after more than 3 failed attempts, pend for 10 minutes
+    if (date < after10Mins) {
+      return res.status(401).json({
+        success: false,
+        message:
+          timeLeft == 0 || timeLeft == 1
+            ? "Try again In 1 minute"
+            : `Try again In ${timeLeft} minutes`,
+        views: session.views,
+      });
+    }
+
+    //after 10 minutes elapse, reset session views and elapes properties, so the user can start over.
+    session.views = 1;
+    session.elapse = null;
+  }
 
   if (method === "POST") {
     const { colorCombination } = req.body;
@@ -44,41 +69,27 @@ export default async function handler(req, res) {
 
     const match =
       JSON.stringify(colorCombination) === JSON.stringify(decryptedPattern);
-    if (!match && views == 1) {
-      return res.status(401).json({
-        success: false,
-        message: "incorrect combination, you have two attempts left",
-        views,
-      });
-    } else if (!match && views == 2) {
-      return res.status(401).json({
-        success: false,
-        message: "incorrect combination, you have one attempt left",
-        views,
-      });
-    } else if (!match && views >= 3) {
-      const date = new Date();
-      function addMins(numOfMins) {
-        date.setTime(date.getTime() + numOfMins * 60 * 1000);
+    const currentViews = session.views;
 
-        return date;
-      }
-      const after10Mins = addMins(10);
-      if (after10Mins < date) {
-        return res.status(401).json({
-          success: false,
-          message:
-            "incorrect combination, you have no more attempts left, try again in 10 mins",
-          views,
-        });
-      } else {
-        session.views = 0;
-        return res.status(401).json({
-          success: false,
-          message: "incorrect combination, you have two attempts left",
-          views,
-        });
-      }
+    if (!match && currentViews == 1) {
+      return res.status(401).json({
+        success: false,
+        message: "Incorrect combination, you have two attempts left",
+        views: currentViews,
+      });
+    } else if (!match && currentViews == 2) {
+      return res.status(401).json({
+        success: false,
+        message: "Incorrect combination, you have one attempt left",
+        views: currentViews,
+      });
+    } else if (!match && currentViews == 3) {
+      session.elapse = new Date();
+      return res.status(401).json({
+        success: false,
+        message: "Try again in 10 mins",
+        views: currentViews,
+      });
     }
 
     deleteCookie("form_key", { req, res });

@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import { HiArrowNarrowLeft } from "react-icons/hi";
 
 const Colors = ({ handleNext, colorArray, setColorArray, loading, errMsg }) => {
-  const router = useRouter()
+  const router = useRouter();
   const [animate, setAnimate] = useState({
     activeColor: null,
   });
@@ -104,12 +104,12 @@ const Colors = ({ handleNext, colorArray, setColorArray, loading, errMsg }) => {
             Reset
           </button>
         </div>
-        <span
-          style={{ marginTop: "17px" }}
+        <small
+          style={{ marginTop: "17px", textAlign: "center", width: "100%" }}
           className={errMsg ? "error-span" : "offscreen"}
         >
           {errMsg}
-        </span>
+        </small>
         <div
           style={{ marginTop: "140px" }}
           className="modal-footer app__flex-2"

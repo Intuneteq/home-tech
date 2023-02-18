@@ -30,6 +30,9 @@ const UserSchema = new mongoose.Schema({
       type: [String],
     },
   },
+  timeOut: {
+    type: Date
+  }
 });
 
 module.exports = mongoose.models.User || mongoose.model("User", UserSchema);
